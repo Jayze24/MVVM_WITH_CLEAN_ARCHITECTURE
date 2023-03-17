@@ -1,6 +1,6 @@
 package space.jay.mvvm_with_clean_architecture.data.network.retrofit
 
-import space.jay.mvvm_with_clean_architecture.data.network.retrofit.mapper.MapperWiki
+import space.jay.mvvm_with_clean_architecture.data.network.retrofit.data.asEntity
 import space.jay.mvvm_with_clean_architecture.data.network.retrofit.service.ServiceWiki
 import space.jay.mvvm_with_clean_architecture.data.source.SourceWiki
 import space.jay.mvvm_with_clean_architecture.domain.entity.EntityWiki
@@ -13,8 +13,7 @@ class ApiWiki @Inject constructor(
     override suspend fun getListWikiRelated(query : String) : List<EntityWiki>? {
         val result = serviceWiki.getListWikiRelated(query)
         return if (result.isSuccessful && result.body() != null) {
-            val mapper = MapperWiki()
-            result.body()!!.pages?.mapNotNull { mapper.map(it) }
+            result.body()!!.pages?.map { it.asEntity() }
         } else {
             null
         }
@@ -23,8 +22,7 @@ class ApiWiki @Inject constructor(
     override suspend fun getWikiSummary(query : String) : EntityWiki? {
         val result = serviceWiki.getWikiSummary(query)
         return if (result.isSuccessful && result.body() != null) {
-            val mapper = MapperWiki()
-            mapper.map(result.body()!!)
+            result.body()?.asEntity()
         } else {
             null
         }

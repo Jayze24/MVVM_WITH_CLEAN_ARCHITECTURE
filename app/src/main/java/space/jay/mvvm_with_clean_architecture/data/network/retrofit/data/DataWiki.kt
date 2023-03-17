@@ -1,5 +1,7 @@
 package space.jay.mvvm_with_clean_architecture.data.network.retrofit.data
 
+import space.jay.mvvm_with_clean_architecture.domain.entity.EntityWiki
+
 data class DataWiki(
     val pageid : Long? = null,
     val title : String? = null,
@@ -25,4 +27,13 @@ data class DataWikiImage(
     val source : String? = null,
     val width : Int? = null,
     val height : Int? = null
+)
+
+fun DataWiki.asEntity() = EntityWiki(
+    id = pageid,
+    title = title,
+    content = extract,
+    image = originalimage?.source,
+    link = content_urls?.mobile?.page ?: content_urls?.desktop?.page,
+    description = description
 )
