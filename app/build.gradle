@@ -39,7 +39,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.4.0'
+        kotlinCompilerExtensionVersion "$version_compose_compiler"
     }
     packagingOptions {
         resources {
@@ -50,42 +50,42 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.0'
-    implementation 'androidx.compose.material3:material3:1.1.0-alpha08'
-
-    /** compose **/
-    implementation 'androidx.activity:activity-compose:1.6.1'
-    implementation "androidx.compose.ui:ui:1.3.3"
-    implementation "androidx.compose.ui:ui-tooling-preview:1.3.3"
-
-    /** lifecycle **/
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0'
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.0"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0"
+    implementation "androidx.core:core-ktx:$version_core_ktx"
 
     /** Coroutines **/
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutines"
+
+    /** lifecycle **/
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$version_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$version_lifecycle"
+
+    /** material **/
+    implementation "androidx.compose.material3:material3:$version_material3"
+
+    /** compose **/
+    implementation "androidx.activity:activity-compose:$version_activity_compose"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$version_lifecycle_compose"
+    implementation "androidx.compose.ui:ui:$version_compose_ui"
+    implementation "androidx.compose.ui:ui-tooling-preview:$version_compose_ui"
 
     /** hilt **/
-    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
-    implementation "com.google.dagger:hilt-android:2.44.2"
-    kapt "com.google.dagger:hilt-android-compiler:2.44.2"
+    implementation "com.google.dagger:hilt-android:$version_hilt"
+    kapt "com.google.dagger:hilt-android-compiler:$version_hilt"
+    implementation "androidx.hilt:hilt-navigation-compose:$version_hilt_compose"
 
     /** retrofit2 **/
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
+    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$version_retrofit"
+    implementation "com.squareup.okhttp3:logging-interceptor:$version_logging_interceptor"
 
-    /** glide **/
-    implementation "com.github.bumptech.glide:compose:1.0.0-alpha.1"
+    /** coil **/
+    implementation "io.coil-kt:coil-compose:$version_coil"
 
-    implementation("io.coil-kt:coil-compose:2.2.2")
-
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.3.3"
-    debugImplementation "androidx.compose.ui:ui-tooling:1.3.3"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:1.3.3"
+    testImplementation "junit:junit:$version_junit"
+    androidTestImplementation "androidx.test.ext:junit:$version_junit_ext"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso_core"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$version_compose_ui"
+    debugImplementation "androidx.compose.ui:ui-tooling:$version_compose_ui"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$version_compose_ui"
 }
