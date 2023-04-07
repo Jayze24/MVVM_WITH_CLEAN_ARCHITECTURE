@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import space.jay.mvvm_with_clean_architecture._core.common.wrapper.Fail
 import space.jay.mvvm_with_clean_architecture._core.common.wrapper.NetworkError
 import space.jay.mvvm_with_clean_architecture._core.common.wrapper.Success
-import space.jay.mvvm_with_clean_architecture._core.domain.UseCaseGetWikiDataWithRelatedTopic
+import space.jay.mvvm_with_clean_architecture._core.domain.UseCaseGetWikiData
 import space.jay.mvvm_with_clean_architecture._core.model.wiki.EntityWiki
 import java.util.*
 import javax.inject.Inject
@@ -19,18 +19,18 @@ import javax.inject.Inject
 @HiltViewModel
 class ViewModelWikiSearch @Inject constructor(
     val savedStateHandle : SavedStateHandle,
-    private val getQueryWikiData : UseCaseGetWikiDataWithRelatedTopic
+    private val getQueryWikiData : UseCaseGetWikiData,
 ) : ViewModel() {
 
     companion object {
-        const val QUERY = "QUERY"
+        const val SEARCH_QUERY = "QUERY"
     }
 
     private val _uiState = MutableStateFlow(UiStateWiki())
     val uiStateWiki : StateFlow<UiStateWiki> = _uiState
 
     fun search(query : String?) {
-        savedStateHandle[QUERY] = query
+        savedStateHandle[SEARCH_QUERY] = query
         query?.also {
             _uiState.update {
                 UiStateWiki(isLoading = true)
