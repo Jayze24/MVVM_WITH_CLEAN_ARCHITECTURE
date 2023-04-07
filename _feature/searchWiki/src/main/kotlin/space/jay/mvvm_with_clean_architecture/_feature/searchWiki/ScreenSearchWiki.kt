@@ -22,21 +22,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import space.jay.mvvm_with_clean_architecture._feature.searchWiki.ViewModelWikiSearch.Companion.SEARCH_QUERY
+import space.jay.mvvm_with_clean_architecture._feature.searchWiki.state.StateUIWikiSearch
 
 @Composable
 fun ScreenSearchWiki(
     modifier : Modifier = Modifier,
     viewModel : ViewModelWikiSearch = hiltViewModel()
 ) {
-    val query : String? by viewModel.savedStateHandle.getStateFlow(SEARCH_QUERY, null).collectAsState()
-    val uiStateWiki by viewModel.uiStateWiki.collectAsState()
+    val stateUI by viewModel.stateUI.collectAsState()
     Column(modifier = modifier) {
         SearchBarWiki(
-            value = query ?: "",
+            value = stateUI.searchInput,
             onValueChange = viewModel::search
         )
-        SearchedWiki(uiStateWiki)
+        SearchedWiki(stateUI)
     }
 }
 
@@ -62,19 +61,17 @@ fun SearchBarWiki(
 }
 
 @Composable
-fun SearchedWiki(uiStateWiki : UiStateWiki) {
-    when {
-        uiStateWiki.isLoading -> {
-            Text(
-                modifier = Modifier
-                    .padding(top = 16.dp)
-                    .fillMaxSize(),
-                text = "Loading...",
-                textAlign = TextAlign.Center,
-            )
-        }
-        uiStateWiki.data != null -> {
-            val data = uiStateWiki.data!!
+fun SearchedWiki(stateUI : StateUIWikiSearch) {
+    when(stateUI) {
+        is StateUIWikiSearch.Loading -> Text(
+            modifier = Modifier
+                .padding(top = 16.dp)
+                .fillMaxSize(),
+            text = "Loading...",
+            textAlign = TextAlign.Center,
+        )
+        is StateUIWikiSearch.HasData -> {
+            val data = stateUI.data
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -85,15 +82,13 @@ fun SearchedWiki(uiStateWiki : UiStateWiki) {
                 item { data.description?.also { Text(text = it) } }
             }
         }
-        uiStateWiki.errorMessage != null -> {
-            Text(
-                modifier = Modifier
-                    .padding(top = 16.dp)
-                    .fillMaxSize(),
-                text = uiStateWiki.errorMessage!!,
-                textAlign = TextAlign.Center,
-            )
-        }
+        is StateUIWikiSearch.NoData -> Text(
+            modifier = Modifier
+                .padding(top = 16.dp)
+                .fillMaxSize(),
+            text = "No data",
+            textAlign = TextAlign.Center,
+        )
     }
 }
 
