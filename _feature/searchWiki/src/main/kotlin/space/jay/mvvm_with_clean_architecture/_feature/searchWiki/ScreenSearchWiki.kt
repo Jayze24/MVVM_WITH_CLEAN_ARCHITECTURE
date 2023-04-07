@@ -22,14 +22,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import space.jay.mvvm_with_clean_architecture._feature.searchWiki.ViewModelWikiSearch.Companion.QUERY
+import space.jay.mvvm_with_clean_architecture._feature.searchWiki.ViewModelWikiSearch.Companion.SEARCH_QUERY
 
 @Composable
 fun ScreenSearchWiki(
     modifier : Modifier = Modifier,
     viewModel : ViewModelWikiSearch = hiltViewModel()
 ) {
-    val query : String? by viewModel.savedStateHandle.getStateFlow(QUERY, null).collectAsState()
+    val query : String? by viewModel.savedStateHandle.getStateFlow(SEARCH_QUERY, null).collectAsState()
     val uiStateWiki by viewModel.uiStateWiki.collectAsState()
     Column(modifier = modifier) {
         SearchBarWiki(
