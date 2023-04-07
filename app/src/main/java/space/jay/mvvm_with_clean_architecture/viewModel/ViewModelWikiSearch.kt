@@ -4,15 +4,16 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import space.jay.mvvm_with_clean_architecture._core.common.wrapper.ClientError
 import space.jay.mvvm_with_clean_architecture._core.common.wrapper.Fail
-import space.jay.mvvm_with_clean_architecture._core.common.wrapper.ServerError
+import space.jay.mvvm_with_clean_architecture._core.common.wrapper.NetworkError
 import space.jay.mvvm_with_clean_architecture._core.common.wrapper.Success
-import space.jay.mvvm_with_clean_architecture._core.model.wiki.EntityWiki
 import space.jay.mvvm_with_clean_architecture._core.domain.UseCaseGetWikiDataWithRelatedTopic
-import java.util.UUID
+import space.jay.mvvm_with_clean_architecture._core.model.wiki.EntityWiki
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,8 +42,7 @@ class ViewModelWikiSearch @Inject constructor(
                     UiStateWiki().apply {
                         when(result) {
                             is Success -> this.data = result.data
-                            is ClientError -> this.errorMessage = "${result.code} ${result.message}"
-                            is ServerError -> this.errorMessage = "${result.code} ${result.message}"
+                            is NetworkError -> this.errorMessage = "${result.code} ${result.message}"
                             is Fail -> this.errorMessage = "${result.throwable}"
                         }
                     }
