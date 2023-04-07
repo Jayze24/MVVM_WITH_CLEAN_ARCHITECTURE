@@ -27,6 +27,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+            applicationIdSuffix ".debug"
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -37,6 +43,7 @@ android {
     }
     buildFeatures {
         compose true
+        buildConfig true
     }
     composeOptions {
         kotlinCompilerExtensionVersion "$version_compose_compiler"
@@ -49,6 +56,11 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":_core:common"))
+    implementation(project(":_core:domain"))
+    implementation(project(":_core:data"))
+    implementation(project(":_core:model"))
 
     implementation "androidx.core:core-ktx:$version_core_ktx"
 

@@ -5,14 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -31,6 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import dagger.hilt.android.AndroidEntryPoint
 import space.jay.mvvm_with_clean_architecture.ui.theme.BaseTheme
+import space.jay.mvvm_with_clean_architecture.viewModel.UiStateWiki
 import space.jay.mvvm_with_clean_architecture.viewModel.ViewModelWikiSearch
 import space.jay.mvvm_with_clean_architecture.viewModel.ViewModelWikiSearch.Companion.QUERY
 
@@ -75,39 +74,50 @@ fun SearchWiki(
 fun SearchedWiki(
     viewModel : ViewModelWikiSearch = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
-    val wiki by viewModel.searchedWiki.collectAsState(initial = null)
-    val listWikiRelated by viewModel.relatedListSearchedQuery.collectAsState(initial = null)
-    wiki?.run {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp, 8.dp)
-        ) {
-            item { Image(image = image) }
-            item { title?.also { Text(text = it, fontSize = 18.sp) } }
-            item { description?.also { Text(text = it) } }
-            item { RelatedTopic() }
-            listWikiRelated?.also { list ->
-                items(list) { item ->
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable(true) {
-                                viewModel.search(item.title)
-                            },
-                        text = item.title ?: "No Title"
-                    )
+    val wiki by viewModel.uiStateWiki.collectAsState()
+    when {
+        wiki.isLoading -> {
+            Text(
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .fillMaxSize(),
+                text = "Loading...",
+                textAlign = TextAlign.Center,
+            )
+        }
+        wiki.data != null -> {
+            val data = wiki.data!!
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp, 8.dp)
+            ) {
+                item { Image(image = data.image) }
+                item { data.title?.also { Text(text = it, fontSize = 18.sp) } }
+                item { data.description?.also { Text(text = it) } }
+                data.listRelated?.also { list ->
+                    items(list) { item ->
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable(true) {
+                                    viewModel.search(item.title)
+                                },
+                            text = item.title ?: "No Title"
+                        )
+                    }
                 }
             }
         }
-    } ?: run {
-        Text(
-            modifier = Modifier
-                .padding(top = 16.dp)
-                .fillMaxSize(),
-            text = "No search results\nPlease change your keywords",
-            textAlign = TextAlign.Center,
-        )
+        wiki.errorMessage != null -> {
+            Text(
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .fillMaxSize(),
+                text = wiki.errorMessage!!,
+                textAlign = TextAlign.Center,
+            )
+        }
     }
 }
 
@@ -124,19 +134,5 @@ fun Image(
             model = it,
             contentDescription = null
         )
-    }
-}
-
-@Composable
-fun RelatedTopic(
-    viewModel : ViewModelWikiSearch = androidx.lifecycle.viewmodel.compose.viewModel()
-) {
-    Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        onClick = viewModel::related
-    ) {
-        Text(text = "Show Related Topics")
     }
 }
