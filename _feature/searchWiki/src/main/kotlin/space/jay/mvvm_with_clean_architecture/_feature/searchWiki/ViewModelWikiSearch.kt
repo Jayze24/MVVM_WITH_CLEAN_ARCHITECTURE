@@ -1,4 +1,4 @@
-package space.jay.mvvm_with_clean_architecture.viewModel
+package space.jay.mvvm_with_clean_architecture._feature.searchWiki
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -24,7 +24,6 @@ class ViewModelWikiSearch @Inject constructor(
 
     companion object {
         const val QUERY = "QUERY"
-        const val LIST_RELATED = "LIST_RELATED"
     }
 
     private val _uiState = MutableStateFlow(UiStateWiki())

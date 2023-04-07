@@ -19,3 +19,4 @@ include ":_core:data"
 include ":_core:domain"
 include ":_core:model"
 include ":_core:network"
+include ':_feature:searchWiki'
