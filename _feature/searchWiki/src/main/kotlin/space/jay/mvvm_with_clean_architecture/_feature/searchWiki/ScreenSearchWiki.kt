@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import space.jay.mvvm_with_clean_architecture._core.common.log.Log
 import space.jay.mvvm_with_clean_architecture._core.model.wiki.EntityWiki
 import space.jay.mvvm_with_clean_architecture._feature.searchWiki.state.StateUIWikiSearch
 
@@ -35,6 +36,7 @@ fun ScreenSearchWiki(
     viewModel : ViewModelWikiSearch = hiltViewModel()
 ) {
     val stateUI by viewModel.stateUI.collectAsState()
+    Log.send(stateUI)
     Column(modifier = modifier) {
         SearchBarWiki(
             value = stateUI.searchInput,
