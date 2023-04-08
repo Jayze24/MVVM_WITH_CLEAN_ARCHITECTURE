@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        version_core_ktx = '1.9.0'
+        version_core_ktx = '1.10.0'
         version_lifecycle = '2.6.1'
         version_coroutines = '1.6.4'
 
@@ -8,7 +8,7 @@ buildscript {
 
         version_activity_compose = '1.7.0'
         version_lifecycle_compose = '2.6.1'
-        version_compose_ui = '1.4.0'
+        version_compose_ui = '1.4.1'
         version_compose_compiler = '1.4.3'
 
         version_hilt = '2.44.2'
