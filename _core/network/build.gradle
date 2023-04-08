@@ -8,9 +8,6 @@ plugins {
 android {
     namespace 'space.jay.mvvm_with_clean_architecture._core.network'
     compileSdk 33
-    buildFeatures {
-        buildConfig true
-    }
 }
 
 dependencies {

@@ -16,4 +16,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$version_hilt"
     kapt "com.google.dagger:hilt-android-compiler:$version_hilt"
     implementation "androidx.hilt:hilt-navigation-compose:$version_hilt_compose"
+
+    /** logger **/
+    implementation "com.orhanobut:logger:$version_logger"
 }
