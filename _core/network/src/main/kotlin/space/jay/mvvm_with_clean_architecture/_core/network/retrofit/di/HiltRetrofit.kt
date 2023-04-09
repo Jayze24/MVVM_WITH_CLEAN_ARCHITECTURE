@@ -13,6 +13,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import space.jay.mvvm_with_clean_architecture._core.network.SourceWiki
 import space.jay.mvvm_with_clean_architecture._core.network.retrofit.RetrofitNetworkWiki
+import space.jay.mvvm_with_clean_architecture._core.network.retrofit.dao.DaoPokemonGo
 import space.jay.mvvm_with_clean_architecture._core.network.retrofit.dao.DaoWiki
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -51,4 +52,15 @@ internal object HiltRetrofitFactory {
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .build()
             .create(DaoWiki::class.java)
+
+
+    @Provides
+    @Singleton
+    internal fun providesPokemonGo(okHttpCallFactory : Call.Factory) : DaoPokemonGo =
+        Retrofit.Builder()
+            .baseUrl("https://pokemon-go-api.github.io/pokemon-go-api")
+            .callFactory(okHttpCallFactory)
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+            .build()
+            .create(DaoPokemonGo::class.java)
 }
