@@ -1,9 +1,9 @@
-package space.jay.mvvm_with_clean_architecture._feature.searchWiki.state
+package space.jay.mvvm_with_clean_architecture._feature.listPokemon.state
 
 import space.jay.mvvm_with_clean_architecture._core.model.ErrorMessage
-import space.jay.mvvm_with_clean_architecture._core.model.wiki.EntityWiki
+import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntityPokemon
 
-sealed interface StateUIWikiSearch {
+sealed interface StateUIListPokemon {
 
     val searchInput : String
     val errorMessage : List<ErrorMessage>
@@ -11,16 +11,16 @@ sealed interface StateUIWikiSearch {
     data class Loading(
         override val searchInput : String,
         override val errorMessage : List<ErrorMessage>
-    ) : StateUIWikiSearch
+    ) : StateUIListPokemon
 
     data class NoData(
         override val searchInput : String,
         override val errorMessage : List<ErrorMessage>
-    ) : StateUIWikiSearch
+    ) : StateUIListPokemon
 
     data class HasData(
         override val searchInput : String,
         override val errorMessage : List<ErrorMessage>,
-        val data : EntityWiki
-    ) : StateUIWikiSearch
+        val listData : List<EntityPokemon>
+    ) : StateUIListPokemon
 }

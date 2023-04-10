@@ -1,11 +1,10 @@
-package space.jay.mvvm_with_clean_architecture._feature.searchWiki
+package space.jay.mvvm_with_clean_architecture._feature.listPokemon
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,18 +13,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
 import space.jay.mvvm_with_clean_architecture._core.common.log.Log
+import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntityPokemon
 import space.jay.mvvm_with_clean_architecture._core.model.wiki.EntityWiki
 import space.jay.mvvm_with_clean_architecture._core.ui.common.Loading
 import space.jay.mvvm_with_clean_architecture._core.ui.common.NoData
 import space.jay.mvvm_with_clean_architecture._core.ui.common.SearchBar
-import space.jay.mvvm_with_clean_architecture._feature.searchWiki.state.StateUIWikiSearch
+import space.jay.mvvm_with_clean_architecture._feature.listPokemon.state.StateUIListPokemon
 
 @Composable
-fun ScreenSearchWiki(
+fun ScreenListPokemon(
     modifier : Modifier = Modifier,
-    viewModel : ViewModelWikiSearch = hiltViewModel()
+    viewModel : ViewModelListPokemon = hiltViewModel()
 ) {
     val stateUI by viewModel.stateUI.collectAsState()
     Log.send(stateUI)
@@ -33,46 +32,35 @@ fun ScreenSearchWiki(
         SearchBar(
             value = stateUI.searchInput,
             onValueChange = viewModel::search,
-            hint = "search Wiki",
-            isFocus = true,
-            onSearch = { viewModel.search(stateUI.searchInput, true) }
+            hint = "search Pokemon",
         )
-        SearchedWiki(stateUI)
+        Content(stateUI = stateUI)
     }
 }
 
 @Composable
-fun SearchedWiki(stateUI : StateUIWikiSearch) {
-    when (stateUI) {
-        is StateUIWikiSearch.Loading -> Loading()
-        is StateUIWikiSearch.HasData -> SearchedWikiHasData(data = stateUI.data)
-        is StateUIWikiSearch.NoData -> NoData(message = "No Data")
+fun Content(stateUI : StateUIListPokemon) {
+    when(stateUI) {
+        is StateUIListPokemon.Loading -> Loading()
+        is StateUIListPokemon.HasData -> HasData(listPokemon = stateUI.listData)
+        is StateUIListPokemon.NoData -> NoData(message = "No Data")
     }
 }
 
 @Composable
-fun SearchedWikiHasData(data : EntityWiki) {
+fun HasData(listPokemon : List<EntityPokemon>) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp, 8.dp)
     ) {
-        item { Image(image = data.image) }
-        item { data.title?.also { Text(text = it, fontSize = 18.sp) } }
-        item { data.description?.also { Text(text = it) } }
+        items(listPokemon) { pokemon ->
+            HolderPokemon(data = pokemon)
+        }
     }
 }
 
 @Composable
-fun Image(image : String?) {
-    image?.also {
-        AsyncImage(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            model = it,
-            contentDescription = null
-        )
-    }
+fun HolderPokemon(data : EntityPokemon) {
+    Text(text = "No.${data.number}\n${data.name}")
 }

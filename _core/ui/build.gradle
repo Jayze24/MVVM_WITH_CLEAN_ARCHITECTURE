@@ -2,11 +2,10 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
 }
 
 android {
-    namespace 'space.jay.mvvm_with_clean_architecture._feature.searchwiki'
+    namespace 'space.jay.mvvm_with_clean_architecture._core.ui'
     compileSdk 33
     buildFeatures {
         compose true
@@ -18,19 +17,7 @@ android {
 
 dependencies {
     implementation(project(":_core:common"))
-    implementation(project(":_core:domain"))
     implementation(project(":_core:model"))
-    implementation(project(":_core:ui"))
-
-    implementation "androidx.core:core-ktx:$version_core_ktx"
-
-    /** Coroutines **/
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutines"
-
-    /** lifecycle **/
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_lifecycle"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$version_lifecycle"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$version_lifecycle"
 
     /** material **/
     implementation "androidx.compose.material3:material3:$version_material3"
@@ -40,11 +27,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$version_lifecycle_compose"
     implementation "androidx.compose.ui:ui:$version_compose_ui"
     implementation "androidx.compose.ui:ui-tooling-preview:$version_compose_ui"
-
-    /** hilt **/
-    implementation "com.google.dagger:hilt-android:$version_hilt"
-    kapt "com.google.dagger:hilt-android-compiler:$version_hilt"
-    implementation "androidx.hilt:hilt-navigation-compose:$version_hilt_compose"
 
     /** coil **/
     implementation "io.coil-kt:coil-compose:$version_coil"

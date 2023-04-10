@@ -62,6 +62,7 @@ dependencies {
     implementation(project(":_core:data"))
     implementation(project(":_core:model"))
     implementation(project(":_feature:searchWiki"))
+    implementation(project(":_feature:listPokemon"))
 
     implementation "androidx.core:core-ktx:$version_core_ktx"
 
