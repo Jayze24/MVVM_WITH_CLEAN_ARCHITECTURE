@@ -1,9 +1,10 @@
-package space.jay.mvvm_with_clean_architecture._core.network
+package space.jay.mvvm_with_clean_architecture._core.data
 
 import space.jay.mvvm_with_clean_architecture._core.common.wrapper.Result
 import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntityPokemon
+import space.jay.mvvm_with_clean_architecture._core.model.wiki.EntityWiki
 
-interface SourcePokemonGo {
+interface RepositoryPokemonGo {
 
     suspend fun getListPokemon() : Result<List<EntityPokemon>>
 
@@ -11,7 +12,8 @@ interface SourcePokemonGo {
 
     suspend fun getListPokemonByGeneration(generation : Int) : Result<List<EntityPokemon>>
 
-    suspend fun getPokemonByNumber(dexNr : Int) : Result<EntityPokemon?>
+    suspend fun getPokemon(number : Int) : Result<EntityPokemon?>
 
-    suspend fun getPokemonByName(id : String) : Result<EntityPokemon?>
+    suspend fun getPokemon(id : String) : Result<EntityPokemon?>
+
 }

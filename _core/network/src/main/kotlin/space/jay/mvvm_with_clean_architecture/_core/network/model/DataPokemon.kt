@@ -1,7 +1,10 @@
 package space.jay.mvvm_with_clean_architecture._core.network.model
 
+import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntityEvolution
+import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntityMegaEvolution
 import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntityPokemon
-import java.util.Locale
+import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntitySkill
+import java.util.*
 
 data class DataPokemon(
     val id : String = "",
@@ -135,8 +138,8 @@ fun DataPokemon.asEntity(language : String = Locale.getDefault().displayLanguage
     imageNormal = assets?.image,
     imageShiny = assets?.shinyImage,
     imageCostume = assetForms.filter { !it.costume.isNullOrBlank() && !it.image.isNullOrBlank() }.map { it.image!! }.toSet(),
-    evolutions = evolutions, // todo jay 수정하기
-    megaEvolutions = megaEvolutions // todo jay 수정하기
+    evolutions = evolutions.map { it.asEntity(language) },
+    megaEvolutions = megaEvolutions?.values?.map { it.asEntity(language) }
 )
 
 private fun Map<String, String>.getName(language : String = Locale.getDefault().displayLanguage) : String {
@@ -147,19 +150,39 @@ private fun TypePokemon?.getName(language : String = Locale.getDefault().display
     return if (this == null) null else this.names[language] ?: this.names["English"] ?: this.type
 }
 
-private fun Skill.asEntity(language : String = Locale.getDefault().displayLanguage) =
-    space.jay.mvvm_with_clean_architecture._core.model.pokemon.Skill(
-        name = names.getName(language),
-        type = type.names.getName(language),
-        power = power,
-        energy = energy,
-        durationMs = durationMs,
-        combatEnergy = combat.energy,
-        combatPower = combat.energy,
-        combatTurns = combat.turns,
-        combatActivationChance = combat.buffs?.activationChance,
-        combatAttackerAttackStatsChange = combat.buffs?.attackerAttackStatsChange,
-        combatAttackerDefenseStatsChange = combat.buffs?.attackerDefenseStatsChange,
-        combatTargetAttackStatsChange = combat.buffs?.targetAttackStatsChange,
-        combatTargetDefenseStatsChange = combat.buffs?.targetDefenseStatsChange
-    )
+private fun Skill.asEntity(language : String = Locale.getDefault().displayLanguage) = EntitySkill(
+    name = names.getName(language),
+    type = type.names.getName(language),
+    power = power,
+    energy = energy,
+    durationMs = durationMs,
+    combatEnergy = combat.energy,
+    combatPower = combat.energy,
+    combatTurns = combat.turns,
+    combatActivationChance = combat.buffs?.activationChance,
+    combatAttackerAttackStatsChange = combat.buffs?.attackerAttackStatsChange,
+    combatAttackerDefenseStatsChange = combat.buffs?.attackerDefenseStatsChange,
+    combatTargetAttackStatsChange = combat.buffs?.targetAttackStatsChange,
+    combatTargetDefenseStatsChange = combat.buffs?.targetDefenseStatsChange
+)
+
+private fun Evolution.asEntity(language : String = Locale.getDefault().displayLanguage) = EntityEvolution(
+    id = id,
+    candies = candies,
+    item = item?.names?.getName(language),
+    questDescription = quests.fold("") { acc, quests ->
+        val q = quests.names.getName(language)
+        if (q.isBlank()) acc else "$acc\n$q"
+    }
+)
+
+private fun MegaEvolution.asEntity(language : String = Locale.getDefault().displayLanguage) = EntityMegaEvolution(
+    name = names.getName(language),
+    typePrimary = primaryType.names.getName(language),
+    typeSecondary = secondaryType?.names?.getName(language),
+    stamina = stats?.stamina ?: 0,
+    attack = stats?.attack ?: 0,
+    defense = stats?.defense ?: 0,
+    imageNormal = assets?.image,
+    imageShiny = assets?.shinyImage
+)

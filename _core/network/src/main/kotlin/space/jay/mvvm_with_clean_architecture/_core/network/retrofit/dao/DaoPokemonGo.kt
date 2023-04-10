@@ -7,15 +7,18 @@ import space.jay.mvvm_with_clean_architecture._core.network.model.DataPokemon
 
 interface DaoPokemonGo {
 
-    @GET("/api/pokedex.json")
+    @GET("/pokemon-go-api/api/pokedex.json")
     suspend fun getListPokemon() : Response<List<DataPokemon>>
 
-    @GET("/api/pokedex/mega.json")
+    @GET("/pokemon-go-api/api/pokedex/mega.json")
     suspend fun getListMegaPokemon() : Response<List<DataPokemon>>
 
-    @GET("/api/pokedex/generation/{generation}.json")
+    @GET("/pokemon-go-api/api/pokedex/generation/{generation}.json")
     suspend fun getListPokemonByGeneration(@Path("generation") generation : Int) : Response<List<DataPokemon>>
 
-    @GET("/api/pokedex/id/{id}.json")
-    suspend fun getPokemonByNumber(@Path("id") id : String) : Response<List<DataPokemon>>
+    @GET("/pokemon-go-api/api/pokedex/id/{id}.json")
+    suspend fun getPokemonByNumber(@Path("id") dexNr : Int) : Response<DataPokemon?>
+
+    @GET("/pokemon-go-api/api/pokedex/name/{name}.json")
+    suspend fun getPokemonByName(@Path("name") id : String) : Response<DataPokemon?>
 }
