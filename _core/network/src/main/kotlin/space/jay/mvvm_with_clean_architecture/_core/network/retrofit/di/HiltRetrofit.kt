@@ -17,6 +17,7 @@ import space.jay.mvvm_with_clean_architecture._core.network.retrofit.RetrofitNet
 import space.jay.mvvm_with_clean_architecture._core.network.retrofit.RetrofitNetworkWiki
 import space.jay.mvvm_with_clean_architecture._core.network.retrofit.dao.DaoPokemonGo
 import space.jay.mvvm_with_clean_architecture._core.network.retrofit.dao.DaoWiki
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -52,7 +53,7 @@ internal object HiltRetrofitFactory {
     @Singleton
     internal fun providesWiki(okHttpCallFactory : Call.Factory) : DaoWiki =
         Retrofit.Builder()
-            .baseUrl("https://en.wikipedia.org")
+            .baseUrl("https://${Locale.getDefault().language}.wikipedia.org")
             .callFactory(okHttpCallFactory)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .build()
