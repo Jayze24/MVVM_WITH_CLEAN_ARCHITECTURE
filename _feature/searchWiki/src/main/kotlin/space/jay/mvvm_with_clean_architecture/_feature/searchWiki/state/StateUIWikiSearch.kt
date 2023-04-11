@@ -1,6 +1,6 @@
 package space.jay.mvvm_with_clean_architecture._feature.searchWiki.state
 
-import space.jay.mvvm_with_clean_architecture._core.model.ErrorMessage
+import space.jay.mvvm_with_clean_architecture._core.common.wrapper.ErrorMessage
 import space.jay.mvvm_with_clean_architecture._core.model.wiki.EntityWiki
 
 sealed interface StateUIWikiSearch {

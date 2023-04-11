@@ -1,4 +1,4 @@
-package space.jay.mvvm_with_clean_architecture._core.model
+package space.jay.mvvm_with_clean_architecture._core.common.wrapper
 
 import java.util.*
 

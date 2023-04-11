@@ -9,7 +9,7 @@ import space.jay.mvvm_with_clean_architecture._core.common.wrapper.Fail
 import space.jay.mvvm_with_clean_architecture._core.common.wrapper.NetworkError
 import space.jay.mvvm_with_clean_architecture._core.common.wrapper.Success
 import space.jay.mvvm_with_clean_architecture._core.domain.UseCaseGetWikiData
-import space.jay.mvvm_with_clean_architecture._core.model.ErrorMessage
+import space.jay.mvvm_with_clean_architecture._core.common.wrapper.ErrorMessage
 import space.jay.mvvm_with_clean_architecture._feature.searchWiki.state.StateUIWikiSearch
 import space.jay.mvvm_with_clean_architecture._feature.searchWiki.state.StateViewModelWikiSearch
 import javax.inject.Inject

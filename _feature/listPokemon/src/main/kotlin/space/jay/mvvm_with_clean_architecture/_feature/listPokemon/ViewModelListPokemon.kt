@@ -11,16 +11,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import space.jay.mvvm_with_clean_architecture._core.common.log.Log
 import space.jay.mvvm_with_clean_architecture._core.common.wrapper.Fail
 import space.jay.mvvm_with_clean_architecture._core.common.wrapper.NetworkError
 import space.jay.mvvm_with_clean_architecture._core.common.wrapper.Success
 import space.jay.mvvm_with_clean_architecture._core.domain.UseCaseGetListMegaPokemon
 import space.jay.mvvm_with_clean_architecture._core.domain.UseCaseGetListPokemon
-import space.jay.mvvm_with_clean_architecture._core.model.ErrorMessage
+import space.jay.mvvm_with_clean_architecture._core.common.wrapper.ErrorMessage
 import space.jay.mvvm_with_clean_architecture._feature.listPokemon.state.StateUIListPokemon
 import space.jay.mvvm_with_clean_architecture._feature.listPokemon.state.StateViewModelListPokemon
-import java.util.*
 import javax.inject.Inject
 
 const val EXTRA_IS_MEGA = "EXTRA_IS_MEGA"
