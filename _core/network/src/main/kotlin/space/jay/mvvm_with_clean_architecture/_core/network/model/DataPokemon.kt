@@ -4,7 +4,6 @@ import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntityEvolutio
 import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntityMegaEvolution
 import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntityPokemon
 import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntitySkill
-import java.util.*
 
 data class DataPokemon(
     val id : String = "",
@@ -120,7 +119,7 @@ data class MegaEvolution(
     val assets : Assets? = null,
 )
 
-fun DataPokemon.asEntity(language : String = Locale.getDefault().displayLanguage) = EntityPokemon(
+fun DataPokemon.asEntity(language : String) = EntityPokemon(
     id = id,
     number = dexNr,
     generation = generation,
@@ -142,15 +141,15 @@ fun DataPokemon.asEntity(language : String = Locale.getDefault().displayLanguage
     megaEvolutions = megaEvolutions?.values?.map { it.asEntity(language) }
 )
 
-private fun Map<String, String>.getName(language : String = Locale.getDefault().displayLanguage) : String {
-    return this[language] ?: this["English"] ?: ""
+private fun Map<String, String>.getName(language : String) : String {
+    return this[language] ?: ""
 }
 
-private fun TypePokemon?.getName(language : String = Locale.getDefault().displayLanguage) : String? {
-    return if (this == null) null else this.names[language] ?: this.names["English"] ?: this.type
+private fun TypePokemon?.getName(language : String) : String? {
+    return if (this == null) null else this.names[language] ?: this.type
 }
 
-private fun Skill.asEntity(language : String = Locale.getDefault().displayLanguage) = EntitySkill(
+private fun Skill.asEntity(language : String) = EntitySkill(
     name = names.getName(language),
     type = type.names.getName(language),
     power = power,
@@ -166,7 +165,7 @@ private fun Skill.asEntity(language : String = Locale.getDefault().displayLangua
     combatTargetDefenseStatsChange = combat.buffs?.targetDefenseStatsChange
 )
 
-private fun Evolution.asEntity(language : String = Locale.getDefault().displayLanguage) = EntityEvolution(
+private fun Evolution.asEntity(language : String) = EntityEvolution(
     id = id,
     candies = candies,
     item = item?.names?.getName(language),
@@ -176,7 +175,7 @@ private fun Evolution.asEntity(language : String = Locale.getDefault().displayLa
     }
 )
 
-private fun MegaEvolution.asEntity(language : String = Locale.getDefault().displayLanguage) = EntityMegaEvolution(
+private fun MegaEvolution.asEntity(language : String) = EntityMegaEvolution(
     name = names.getName(language),
     typePrimary = primaryType.names.getName(language),
     typeSecondary = secondaryType?.names?.getName(language),
