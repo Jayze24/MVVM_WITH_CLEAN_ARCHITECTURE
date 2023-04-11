@@ -10,6 +10,7 @@ buildscript {
         version_lifecycle_compose = '2.6.1'
         version_compose_ui = '1.4.1'
         version_compose_compiler = '1.4.3'
+        version_navigation_compose = '2.5.3'
 
         version_hilt = '2.44.2'
         version_hilt_compose = '1.0.0'
