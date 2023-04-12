@@ -1,4 +1,4 @@
-package space.jay.mvvm_with_clean_architecture._feature.listPokemon
+package space.jay.mvvm_with_clean_architecture._feature.pokemon.listPokemon
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -11,17 +11,16 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import space.jay.mvvm_with_clean_architecture._core.common.wrapper.ErrorMessage
 import space.jay.mvvm_with_clean_architecture._core.common.wrapper.Fail
 import space.jay.mvvm_with_clean_architecture._core.common.wrapper.NetworkError
 import space.jay.mvvm_with_clean_architecture._core.common.wrapper.Success
 import space.jay.mvvm_with_clean_architecture._core.domain.UseCaseGetListMegaPokemon
 import space.jay.mvvm_with_clean_architecture._core.domain.UseCaseGetListPokemon
-import space.jay.mvvm_with_clean_architecture._core.common.wrapper.ErrorMessage
-import space.jay.mvvm_with_clean_architecture._feature.listPokemon.state.StateUIListPokemon
-import space.jay.mvvm_with_clean_architecture._feature.listPokemon.state.StateViewModelListPokemon
+import space.jay.mvvm_with_clean_architecture._feature.pokemon.argIsMega
+import space.jay.mvvm_with_clean_architecture._feature.pokemon.listPokemon.state.StateUIListPokemon
+import space.jay.mvvm_with_clean_architecture._feature.pokemon.listPokemon.state.StateViewModelListPokemon
 import javax.inject.Inject
-
-const val EXTRA_IS_MEGA = "EXTRA_IS_MEGA"
 
 @HiltViewModel
 class ViewModelListPokemon @Inject constructor(
@@ -31,7 +30,7 @@ class ViewModelListPokemon @Inject constructor(
 ) : ViewModel() {
 
     private val stateViewModel = MutableStateFlow(
-        StateViewModelListPokemon(isMegaPokemon = savedStateHandle[EXTRA_IS_MEGA] ?: false)
+        StateViewModelListPokemon(isMegaPokemon = savedStateHandle[argIsMega] ?: false)
     )
     val stateUI : StateFlow<StateUIListPokemon> = stateViewModel
         .map(StateViewModelListPokemon::toStateUi)
@@ -47,11 +46,11 @@ class ViewModelListPokemon @Inject constructor(
         }
     }
 
-    fun search(name: String) {
+    fun search(name : String) {
         stateViewModel.update { it.copy(searchInput = name) }
     }
 
-    fun getPokemon(number: Int) {
+    fun getPokemon(number : Int) {
         // todo 상세 페이지로 넘기기
     }
 

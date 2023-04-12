@@ -1,4 +1,4 @@
-package space.jay.mvvm_with_clean_architecture._feature.listPokemon
+package space.jay.mvvm_with_clean_architecture._feature.pokemon.listPokemon
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,15 +11,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import space.jay.mvvm_with_clean_architecture._core.common.log.Log
 import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntityPokemon
-import space.jay.mvvm_with_clean_architecture._core.model.wiki.EntityWiki
 import space.jay.mvvm_with_clean_architecture._core.ui.common.Loading
 import space.jay.mvvm_with_clean_architecture._core.ui.common.NoData
 import space.jay.mvvm_with_clean_architecture._core.ui.common.SearchBar
-import space.jay.mvvm_with_clean_architecture._feature.listPokemon.state.StateUIListPokemon
+import space.jay.mvvm_with_clean_architecture._feature.pokemon.listPokemon.state.StateUIListPokemon
 
 @Composable
 fun ScreenListPokemon(
@@ -40,7 +38,7 @@ fun ScreenListPokemon(
 
 @Composable
 fun Content(stateUI : StateUIListPokemon) {
-    when(stateUI) {
+    when (stateUI) {
         is StateUIListPokemon.Loading -> Loading()
         is StateUIListPokemon.HasData -> HasData(listPokemon = stateUI.listData)
         is StateUIListPokemon.NoData -> NoData(message = "No Data")

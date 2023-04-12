@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'space.jay.mvvm_with_clean_architecture._feature.listPokemon'
+    namespace 'space.jay.mvvm_with_clean_architecture._feature.pokemon'
     compileSdk 33
     buildFeatures {
         compose true

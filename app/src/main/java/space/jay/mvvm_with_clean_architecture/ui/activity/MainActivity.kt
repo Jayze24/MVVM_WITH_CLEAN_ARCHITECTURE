@@ -3,9 +3,14 @@ package space.jay.mvvm_with_clean_architecture.ui.activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import space.jay.mvvm_with_clean_architecture._feature.searchWiki.ScreenSearchWiki
+import space.jay.mvvm_with_clean_architecture._core.common.window.Feature
+import space.jay.mvvm_with_clean_architecture._feature.pokemon.routeFinalListPokemon
+import space.jay.mvvm_with_clean_architecture._feature.pokemon.toPokemon
 import space.jay.mvvm_with_clean_architecture.ui.theme.BaseTheme
+import java.lang.ref.WeakReference
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -14,8 +19,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BaseTheme {
-                // todo jay 나중에 네비게이션 적용하기
-                ScreenSearchWiki()
+                // todo jay 네비게이션 제대로 붙이기
+                val nav = rememberNavController()
+                val feature = Feature.getFeature(weakActivity = WeakReference(this))
+                NavHost(
+                    navController = nav,
+                    startDestination = routeFinalListPokemon
+                ) {
+                    toPokemon(feature)
+                }
             }
         }
     }
