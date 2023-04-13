@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import space.jay.mvvm_with_clean_architecture._core.common.window.Feature
-import space.jay.mvvm_with_clean_architecture._feature.pokemon.routeFinalListPokemon
+import space.jay.mvvm_with_clean_architecture._feature.pokemon.routeFinalPokemon
 import space.jay.mvvm_with_clean_architecture._feature.pokemon.toPokemon
 import space.jay.mvvm_with_clean_architecture.ui.theme.BaseTheme
 import java.lang.ref.WeakReference
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                 val feature = Feature.getFeature(weakActivity = WeakReference(this))
                 NavHost(
                     navController = nav,
-                    startDestination = routeFinalListPokemon
+                    startDestination = routeFinalPokemon
                 ) {
                     toPokemon(feature)
                 }

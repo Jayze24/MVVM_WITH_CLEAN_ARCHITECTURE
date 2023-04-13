@@ -1,26 +1,26 @@
-package space.jay.mvvm_with_clean_architecture._feature.pokemon.pokemonDetail.state
+package space.jay.mvvm_with_clean_architecture._feature.pokemon.listPokemon
 
 import space.jay.mvvm_with_clean_architecture._core.common.wrapper.ErrorMessage
 import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntityPokemon
 
-sealed interface StateUIPokemonDetail {
+sealed interface StateUIListPokemon {
 
-    val number : Int
+    val searchInput : String
     val errorMessage : List<ErrorMessage>
 
     data class Loading(
-        override val number : Int,
+        override val searchInput : String,
         override val errorMessage : List<ErrorMessage>
-    ) : StateUIPokemonDetail
+    ) : StateUIListPokemon
 
     data class NoData(
-        override val number : Int,
+        override val searchInput : String,
         override val errorMessage : List<ErrorMessage>
-    ) : StateUIPokemonDetail
+    ) : StateUIListPokemon
 
     data class HasData(
-        override val number : Int,
+        override val searchInput : String,
         override val errorMessage : List<ErrorMessage>,
-        val data : EntityPokemon
-    ) : StateUIPokemonDetail
+        val listData : List<EntityPokemon>
+    ) : StateUIListPokemon
 }

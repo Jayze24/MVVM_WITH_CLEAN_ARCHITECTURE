@@ -1,8 +1,13 @@
 package space.jay.mvvm_with_clean_architecture._feature.pokemon
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -14,59 +19,50 @@ import space.jay.mvvm_with_clean_architecture._core.common.window.TypeWindow
 import space.jay.mvvm_with_clean_architecture._feature.pokemon.listPokemon.ScreenListPokemon
 import space.jay.mvvm_with_clean_architecture._feature.pokemon.pokemonDetail.ScreenPokemonDetail
 
-const val routeListPokemon = "routeListPokemon"
+const val routePokemon = "routePokemon"
 const val argIsMega = "argIsMega"
-const val routeFinalListPokemon = "$routeListPokemon/{$argIsMega}"
+const val routeFinalPokemon = "$routePokemon/{$argIsMega}"
 
-fun NavController.navigateToListPokemon(navOptions : NavOptions? = null, isMega : Boolean = false) {
-    this.navigate("$routeListPokemon/$isMega", navOptions)
+fun NavController.navigateToPokemon(navOptions : NavOptions? = null, isMega : Boolean = false) {
+    this.navigate("$routePokemon/$isMega", navOptions)
 }
 
-fun NavGraphBuilder.toListPokemon(window : TypeWindow) {
+fun NavGraphBuilder.toPokemon(window : TypeWindow) {
     composable(
-        route = routeFinalListPokemon,
+        route = routeFinalPokemon,
         arguments = listOf(
             navArgument(argIsMega) { type = NavType.BoolType }
         )
     ) {
+        val viewModel : ViewModelPokemon = hiltViewModel()
+        val stateUIListPokemon by viewModel.stateUIListPokemon.collectAsState()
+        val stateUIPokemonDetail by viewModel.stateUIPokemonDetail.collectAsState()
+        val lazyListState = rememberLazyListState()
+
         when (window.pane) {
-            TypePane.SINGLE -> ScreenListPokemon()
-            TypePane.DUAL ->  Row(modifier = Modifier.fillMaxSize()) {
-                ScreenListPokemon(modifier = Modifier.weight(1f))
-                ScreenPokemonDetail(modifier = Modifier.weight(1f), pokemonNumber = 0)
+            TypePane.SINGLE -> {
+                if (stateUIPokemonDetail.isOpen) {
+                    BackHandler(onBack = viewModel::closePokemonDetail)
+                    ScreenPokemonDetail(stateUI = stateUIPokemonDetail)    
+                } else {
+                    ScreenListPokemon(
+                        lazyListState = lazyListState,
+                        stateUIListPokemon = stateUIListPokemon,
+                        onClickSearch = viewModel::search,
+                        onClickPokemon = viewModel::getPokemonDetail
+                    )
+                }
+            }
+            TypePane.DUAL -> Row(modifier = Modifier.fillMaxSize()) {
+                ScreenListPokemon(
+                    modifier = Modifier.weight(1f),
+                    lazyListState = lazyListState,
+                    stateUIListPokemon = stateUIListPokemon,
+                    onClickSearch = viewModel::search,
+                    onClickPokemon = viewModel::getPokemonDetail
+                )
+                ScreenPokemonDetail(modifier = Modifier.weight(1f), stateUI = stateUIPokemonDetail)
             }
         }
     }
-}
-
-const val routePokemonDetail = "routePokemonDetail"
-const val argNumber = "argNumber"
-const val routeFinalPokemonDetail = "$routePokemonDetail/{$argNumber}"
-
-fun NavController.navigateToPokemonDetail(navOptions : NavOptions? = null, number : Int = 0) {
-    this.navigate("$routePokemonDetail/$number", navOptions)
-}
-
-fun NavGraphBuilder.toPokemonDetail(window : TypeWindow) {
-    composable(
-        route = routeFinalPokemonDetail,
-        arguments = listOf(
-            navArgument(argNumber) { type = NavType.IntType }
-        )
-    ) {
-        val number = it.arguments?.getInt(argNumber) ?: 0
-        when (window.pane) {
-            TypePane.SINGLE -> ScreenPokemonDetail(pokemonNumber = number)
-            TypePane.DUAL ->  Row(modifier = Modifier.fillMaxSize()) {
-                ScreenListPokemon(modifier = Modifier.weight(1f))
-                ScreenPokemonDetail(modifier = Modifier.weight(1f), pokemonNumber = number)
-            }
-        }
-    }
-}
-
-fun NavGraphBuilder.toPokemon(window : TypeWindow) {
-    // todo jay 화면 회전할때 새로운 화면이 만들어짐. 수정할 것!
-    toListPokemon(window)
-    toPokemonDetail(window)
 }

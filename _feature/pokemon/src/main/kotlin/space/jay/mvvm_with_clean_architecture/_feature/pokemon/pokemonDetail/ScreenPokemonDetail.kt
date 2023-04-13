@@ -6,37 +6,24 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntityPokemon
 import space.jay.mvvm_with_clean_architecture._core.ui.common.Loading
 import space.jay.mvvm_with_clean_architecture._core.ui.common.NoData
-import space.jay.mvvm_with_clean_architecture._feature.pokemon.pokemonDetail.state.StateUIPokemonDetail
 
 @Composable
 fun ScreenPokemonDetail(
     modifier : Modifier = Modifier,
-    viewModel : ViewModelPokemonDetail = hiltViewModel(),
-    pokemonNumber : Int
+    stateUI : StateUIPokemonDetail
 ) {
-    val stateUI by viewModel.stateUI.collectAsState()
-    LaunchedEffect(key1 = pokemonNumber, block = { viewModel.getPokemonDetail(pokemonNumber) })
     Column(modifier = modifier) {
-        Content(stateUI = stateUI)
-    }
-}
-
-@Composable
-fun Content(stateUI : StateUIPokemonDetail) {
-    when (stateUI) {
-        is StateUIPokemonDetail.Loading -> Loading()
-        is StateUIPokemonDetail.HasData -> HasData(stateUI.data)
-        is StateUIPokemonDetail.NoData -> NoData(message = "포켓몬을 선택해 주세요.")
+        when (stateUI) {
+            is StateUIPokemonDetail.Loading -> Loading()
+            is StateUIPokemonDetail.HasData -> HasData(stateUI.data)
+            is StateUIPokemonDetail.NoData -> NoData(message = "포켓몬을 선택해 주세요.")
+        }
     }
 }
 
@@ -49,6 +36,7 @@ fun HasData(data : EntityPokemon) {
         typeSecondary = data.typeSecondary,
         image = data.imageNormal,
     )
+    // todo jay 정보 추가하기....
 }
 
 @Composable
