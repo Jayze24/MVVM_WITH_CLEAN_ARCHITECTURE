@@ -25,6 +25,7 @@ buildscript {
         version_junit = '4.13.2'
         version_junit_ext = '1.1.5'
         version_espresso_core = '3.5.1'
+        version_mockwebserver = '4.7.2'
     }
 }
 
