@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import space.jay.mvvm_with_clean_architecture._core.common.window.Feature
+import space.jay.mvvm_with_clean_architecture.core.common.window.Feature
 import space.jay.mvvm_with_clean_architecture._feature.pokemon.routeFinalPokemon
 import space.jay.mvvm_with_clean_architecture._feature.pokemon.toPokemon
 import space.jay.mvvm_with_clean_architecture.ui.theme.BaseTheme

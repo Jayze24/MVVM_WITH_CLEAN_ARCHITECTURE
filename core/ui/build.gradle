@@ -1,0 +1,33 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'space.jay.mvvm_with_clean_architecture.core.ui'
+    compileSdk 33
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion "$version_compose_compiler"
+    }
+}
+
+dependencies {
+    implementation(project(":core:common"))
+    implementation(project(":core:model"))
+
+    /** material **/
+    implementation "androidx.compose.material3:material3:$version_material3"
+
+    /** compose **/
+    implementation "androidx.activity:activity-compose:$version_activity_compose"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$version_lifecycle_compose"
+    implementation "androidx.compose.ui:ui:$version_compose_ui"
+    implementation "androidx.compose.ui:ui-tooling-preview:$version_compose_ui"
+
+    /** coil **/
+    implementation "io.coil-kt:coil-compose:$version_coil"
+}

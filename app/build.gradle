@@ -57,10 +57,10 @@ android {
 
 dependencies {
 
-    implementation(project(":_core:common"))
-    implementation(project(":_core:domain"))
-    implementation(project(":_core:data"))
-    implementation(project(":_core:model"))
+    implementation(project(":core:common"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:data"))
+    implementation(project(":core:model"))
     implementation(project(":_feature:searchWiki"))
     implementation(project(":_feature:pokemon"))
 

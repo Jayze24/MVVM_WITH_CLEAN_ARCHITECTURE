@@ -9,9 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntityPokemon
-import space.jay.mvvm_with_clean_architecture._core.ui.common.Loading
-import space.jay.mvvm_with_clean_architecture._core.ui.common.NoData
+import space.jay.mvvm_with_clean_architecture.core.model.pokemon.EntityPokemon
+import space.jay.mvvm_with_clean_architecture.core.ui.common.Loading
+import space.jay.mvvm_with_clean_architecture.core.ui.common.NoData
 
 @Composable
 fun ScreenPokemonDetail(

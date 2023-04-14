@@ -1,9 +1,0 @@
-package space.jay.mvvm_with_clean_architecture._core.common.delay
-
-import java.util.UUID
-
-internal data class StateDelayMessage<T>(
-    val isDirect : Boolean = false,
-    val message : T? = null,
-    val id : Long = UUID.randomUUID().mostSignificantBits
-)

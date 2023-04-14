@@ -17,10 +17,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":_core:common"))
-    implementation(project(":_core:domain"))
-    implementation(project(":_core:model"))
-    implementation(project(":_core:ui"))
+    implementation(project(":core:common"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:model"))
+    implementation(project(":core:ui"))
 
     implementation "androidx.core:core-ktx:$version_core_ktx"
 

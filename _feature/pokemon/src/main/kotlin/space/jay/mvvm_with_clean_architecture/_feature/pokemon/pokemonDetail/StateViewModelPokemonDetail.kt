@@ -1,7 +1,7 @@
 package space.jay.mvvm_with_clean_architecture._feature.pokemon.pokemonDetail
 
-import space.jay.mvvm_with_clean_architecture._core.common.wrapper.ErrorMessage
-import space.jay.mvvm_with_clean_architecture._core.model.pokemon.EntityPokemon
+import space.jay.mvvm_with_clean_architecture.core.common.wrapper.ErrorMessage
+import space.jay.mvvm_with_clean_architecture.core.model.pokemon.EntityPokemon
 
 data class StateViewModelPokemonDetail(
     val number : Int = 0,

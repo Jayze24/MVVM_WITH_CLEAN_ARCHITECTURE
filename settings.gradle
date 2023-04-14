@@ -14,11 +14,11 @@ dependencyResolutionManagement {
 }
 rootProject.name = "MVVM_WITH_CLEAN_ARCHITECTURE"
 include ':app'
-include ":_core:common"
-include ":_core:data"
-include ":_core:domain"
-include ":_core:model"
-include ":_core:network"
-include ":_core:ui"
+include ":core:common"
+include ":core:data"
+include ":core:domain"
+include ":core:model"
+include ":core:network"
+include ":core:ui"
 include ':_feature:searchWiki'
 include ':_feature:pokemon'
