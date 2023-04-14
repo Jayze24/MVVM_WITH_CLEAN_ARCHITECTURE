@@ -14,8 +14,8 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import space.jay.mvvm_with_clean_architecture._core.common.window.TypePane
-import space.jay.mvvm_with_clean_architecture._core.common.window.TypeWindow
+import space.jay.mvvm_with_clean_architecture.core.common.window.TypePane
+import space.jay.mvvm_with_clean_architecture.core.common.window.TypeWindow
 import space.jay.mvvm_with_clean_architecture._feature.pokemon.listPokemon.ScreenListPokemon
 import space.jay.mvvm_with_clean_architecture._feature.pokemon.pokemonDetail.ScreenPokemonDetail
 

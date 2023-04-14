@@ -7,7 +7,7 @@
 // import androidx.compose.runtime.rememberCoroutineScope
 // import androidx.compose.runtime.saveable.rememberSaveable
 // import kotlinx.coroutines.CoroutineScope
-// import space.jay.mvvm_with_clean_architecture._core.common.window.TypeWindow
+// import space.jay.mvvm_with_clean_architecture.core.common.window.TypeWindow
 //
 // @Composable
 // fun rememberStateRoutePokemon(

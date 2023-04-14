@@ -1,0 +1,32 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    namespace 'space.jay.mvvm_with_clean_architecture.core.common'
+    compileSdk 33
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion "$version_compose_compiler"
+    }
+}
+
+dependencies {
+
+    /** material **/
+    implementation "androidx.compose.material3:material3-window-size-class:$version_material3"
+    implementation "com.google.accompanist:accompanist-adaptive:0.30.1"
+
+    /** hilt **/
+    implementation "com.google.dagger:hilt-android:$version_hilt"
+    kapt "com.google.dagger:hilt-android-compiler:$version_hilt"
+    implementation "androidx.hilt:hilt-navigation-compose:$version_hilt_compose"
+
+    /** logger **/
+    implementation "com.orhanobut:logger:$version_logger"
+}
