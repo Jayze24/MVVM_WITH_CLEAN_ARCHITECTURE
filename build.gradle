@@ -37,4 +37,5 @@ plugins {
     id 'com.android.library' version '7.4.2' apply false
     id 'org.jetbrains.kotlin.android' version '1.8.10' apply false // 호환성 확인 [https://developer.android.com/jetpack/androidx/releases/compose-kotlin?hl=ko]
     id 'com.google.dagger.hilt.android' version '2.43.2' apply false
+    id 'jacoco'
 }
