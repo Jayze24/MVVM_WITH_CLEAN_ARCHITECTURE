@@ -39,3 +39,9 @@ plugins {
     id 'com.google.dagger.hilt.android' version '2.43.2' apply false
     id 'jacoco'
 }
+
+apply from: "$rootDir/gradle/jacoco_collect.gradle"
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
