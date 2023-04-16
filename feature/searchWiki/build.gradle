@@ -1,11 +1,6 @@
-plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
-}
-
+apply from: "$rootDir/gradle/library.gradle"
 apply from: "$rootDir/gradle/sdk.gradle"
+apply from: "$rootDir/gradle/hilt.gradle"
 
 android {
     namespace 'space.jay.mvvm_with_clean_architecture.feature.searchwiki'
@@ -23,8 +18,6 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:ui"))
 
-    implementation "androidx.core:core-ktx:$version_core_ktx"
-
     /** Coroutines **/
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutines"
 
@@ -41,11 +34,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$version_lifecycle_compose"
     implementation "androidx.compose.ui:ui:$version_compose_ui"
     implementation "androidx.compose.ui:ui-tooling-preview:$version_compose_ui"
-
-    /** hilt **/
-    implementation "com.google.dagger:hilt-android:$version_hilt"
-    kapt "com.google.dagger:hilt-android-compiler:$version_hilt"
-    implementation "androidx.hilt:hilt-navigation-compose:$version_hilt_compose"
 
     /** coil **/
     implementation "io.coil-kt:coil-compose:$version_coil"
