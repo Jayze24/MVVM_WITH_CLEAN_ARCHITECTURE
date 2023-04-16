@@ -5,9 +5,10 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+apply from: "$rootDir/gradle/sdk.gradle"
+
 android {
     namespace 'space.jay.mvvm_with_clean_architecture.core.data'
-    compileSdk 33
 }
 
 dependencies {
@@ -15,6 +16,8 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:network"))
     implementation(project(":core:model"))
+
+    implementation "androidx.core:core-ktx:$version_core_ktx"
 
     /** hilt **/
     implementation "com.google.dagger:hilt-android:$version_hilt"

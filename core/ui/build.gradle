@@ -4,9 +4,10 @@ plugins {
     id 'kotlin-kapt'
 }
 
+apply from: "$rootDir/gradle/sdk.gradle"
+
 android {
     namespace 'space.jay.mvvm_with_clean_architecture.core.ui'
-    compileSdk 33
     buildFeatures {
         compose true
     }
@@ -18,6 +19,8 @@ android {
 dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:model"))
+
+    implementation "androidx.core:core-ktx:$version_core_ktx"
 
     /** material **/
     implementation "androidx.compose.material3:material3:$version_material3"

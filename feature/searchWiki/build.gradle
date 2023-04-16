@@ -5,9 +5,10 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+apply from: "$rootDir/gradle/sdk.gradle"
+
 android {
     namespace 'space.jay.mvvm_with_clean_architecture.feature.searchwiki'
-    compileSdk 33
     buildFeatures {
         compose true
     }
