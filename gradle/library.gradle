@@ -1,0 +1,6 @@
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+
+dependencies {
+    implementation "androidx.core:core-ktx:$version_core_ktx"
+}

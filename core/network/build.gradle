@@ -1,8 +1,4 @@
-plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-}
-
+apply from: "$rootDir/gradle/library.gradle"
 apply from: "$rootDir/gradle/sdk.gradle"
 apply from: "$rootDir/gradle/jacoco.gradle"
 apply from: "$rootDir/gradle/hilt.gradle"
@@ -16,8 +12,6 @@ dependencies {
 
     implementation(project(":core:common"))
     implementation(project(":core:model"))
-
-    implementation "androidx.core:core-ktx:$version_core_ktx"
 
     /** retrofit2 **/
     implementation "com.squareup.retrofit2:retrofit:$version_retrofit"

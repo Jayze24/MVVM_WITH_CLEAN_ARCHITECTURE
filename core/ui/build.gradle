@@ -1,8 +1,4 @@
-plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-}
-
+apply from: "$rootDir/gradle/library.gradle"
 apply from: "$rootDir/gradle/sdk.gradle"
 
 android {
@@ -18,8 +14,6 @@ android {
 dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:model"))
-
-    implementation "androidx.core:core-ktx:$version_core_ktx"
 
     /** material **/
     implementation "androidx.compose.material3:material3:$version_material3"

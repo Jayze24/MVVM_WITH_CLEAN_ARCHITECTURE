@@ -1,8 +1,4 @@
-plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-}
-
+apply from: "$rootDir/gradle/library.gradle"
 apply from: "$rootDir/gradle/sdk.gradle"
 apply from: "$rootDir/gradle/jacoco.gradle"
 apply from: "$rootDir/gradle/hilt.gradle"
@@ -19,9 +15,6 @@ android {
 }
 
 dependencies {
-
-    implementation "androidx.core:core-ktx:$version_core_ktx"
-
     /** logger **/
     implementation "com.orhanobut:logger:$version_logger"
 

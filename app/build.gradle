@@ -1,8 +1,4 @@
-plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-}
-
+apply from: "$rootDir/gradle/application.gradle"
 apply from: "$rootDir/gradle/sdk.gradle"
 apply from: "$rootDir/gradle/hilt.gradle"
 
@@ -60,8 +56,6 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":feature:searchWiki"))
     implementation(project(":feature:pokemon"))
-
-    implementation "androidx.core:core-ktx:$version_core_ktx"
 
     /** Coroutines **/
 //    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutines"
