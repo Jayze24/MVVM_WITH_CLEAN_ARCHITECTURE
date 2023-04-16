@@ -5,9 +5,11 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+apply from: "$rootDir/gradle/sdk.gradle"
+apply from: "$rootDir/gradle/jacoco.gradle"
+
 android {
     namespace 'space.jay.mvvm_with_clean_architecture.core.common'
-    compileSdk 33
     buildFeatures {
         compose true
     }
@@ -17,6 +19,8 @@ android {
 }
 
 dependencies {
+
+    implementation "androidx.core:core-ktx:$version_core_ktx"
 
     /** material **/
     implementation "androidx.compose.material3:material3-window-size-class:$version_material3"
@@ -29,4 +33,11 @@ dependencies {
 
     /** logger **/
     implementation "com.orhanobut:logger:$version_logger"
+
+    testImplementation "androidx.test:core-ktx:$version_test_core_ktx"
+//    testImplementation "androidx.test.ext:junit:$version_junit_ext"
+    testImplementation "junit:junit:$version_junit"
+    testImplementation "org.robolectric:robolectric:$version_robolectric"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$version_mockwebserver"
+    testImplementation "com.google.truth:truth:$version_truth"
 }

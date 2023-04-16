@@ -5,18 +5,16 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+apply from: "$rootDir/gradle/sdk.gradle"
+
 android {
     namespace 'space.jay.mvvm_with_clean_architecture'
-    compileSdk 33
 
     defaultConfig {
         applicationId "space.jay.mvvm_with_clean_architecture"
-        minSdk 23
-        targetSdk 33
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
         }
@@ -35,11 +33,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
     buildFeatures {
         compose true

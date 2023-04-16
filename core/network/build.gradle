@@ -5,15 +5,11 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+apply from: "$rootDir/gradle/sdk.gradle"
+apply from: "$rootDir/gradle/jacoco.gradle"
+
 android {
     namespace 'space.jay.mvvm_with_clean_architecture.core.network'
-    compileSdk 33
-    defaultConfig {
-        minSdk 23
-        targetSdk 33
-
-//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
     testOptions.unitTests.includeAndroidResources = true
 }
 
@@ -21,6 +17,8 @@ dependencies {
 
     implementation(project(":core:common"))
     implementation(project(":core:model"))
+
+    implementation "androidx.core:core-ktx:$version_core_ktx"
 
     /** hilt **/
     implementation "com.google.dagger:hilt-android:$version_hilt"
@@ -43,9 +41,3 @@ dependencies {
 //    testImplementation "com.google.dagger:hilt-android-testing:$version_hilt"
 //    kaptTest "com.google.dagger:hilt-android-compiler:$version_hilt"
 }
-
-ext {
-    pFlavor = ''
-}
-
-apply from: "$rootDir/gradle/jacoco.gradle"
