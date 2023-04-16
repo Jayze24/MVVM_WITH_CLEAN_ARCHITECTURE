@@ -1,79 +1,72 @@
-// 참고 : https://jkroh.tistory.com/19
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = '0.8.9'
+    toolVersion '0.8.7'
 }
 
-// flavor가 설정된 모듈의 경우, 적용된 flavor 명칭을 알아야한다
-// 모듈의 build.gradle 파일에 설정된 flavor 값을 가져온다
-String flavor = project.ext.has('pFlavor') ? project.ext.pFlavor : ''
-
-// jacoco는 jutni test 결과를 기반으로 동작한다
-// jacoco 리포트 생성 작업 이전에 unit test task가 완료되어야한다
-String dependsOnTask = "test${flavor.capitalize()}DebugUnitTest"
-
-// jacoco gradle task 추가
-// jacocoReport 타입의 task이며,
-// 위에서 알아낸 dependsOnTask를 종속 task로 설정한다
-task generateCodeCoverageReports(type: JacocoReport, dependsOn: dependsOnTask) {
-    group = "Reporting"
-    description = "Generate Jaoco Coverage Reports"
-
-    def reportDirPath = "$buildDir/reports/codeCoverage"
-
-    reports {
-        html.enabled true
-        xml.enabled true
-
-        html.destination file("$reportDirPath/${project.name}")
-        xml.destination file("$reportDirPath/${project.name}.xml")
-    }
-
-    def fileFilter = [
-            '**/R.class',
-            '**/R$*.class',
-            '**/BuildConfig.*',
-            '**/Manifest*.*',
-            '**/*Test*.*',
-            'android/**/*.*',
-            '**/*InjectAdapter*.*',
-            '**/*StaticInjection*.*',
-            '**/*ModuleAdapter*.*',
-            // Dagger
-            '**/*_Provide*/**',
-            '**/*_Factory*/**',
-            '**/*_MembersInjector.class',
-            '**/*Dagger*'
-    ]
-
-    def javaClassDirPath = "$project.buildDir/intermediates/javac/debug/classes"
-    def kotlinClassDirPath = "$project.buildDir/tmp/kotlin-classes/debug"
-    def coverageExecutionDataPath = "${buildDir}/jacoco/testDebugUnitTest.exec"
-
-    // flavor가 설정된 경우, 결과물의 경로가 변하기 때문에, 꼭 설정해줘야한다
-    if (!flavor.isEmpty()) {
-        javaClassDirPath = "$project.buildDir/intermediates/javac/${flavor}Debug/classes"
-        kotlinClassDirPath = "$project.buildDir/tmp/kotlin-classes/${flavor}Debug"
-        coverageExecutionDataPath = "${buildDir}/jacoco/test${flavor.capitalize()}DebugUnitTest.exec"
-    }
-
-    def mainJavaSrcPath = "$project.projectDir/src/main/java"
-    def mainKotlinSrcPath = "$project.projectDir/src/main/kotlin"
-
-    sourceDirectories.from = files([mainJavaSrcPath, mainKotlinSrcPath])
-    classDirectories.from = fileTree(
-            dir: javaClassDirPath,
-            excludes: fileFilter
-    ) + fileTree(
-            dir: kotlinClassDirPath,
-            excludes: fileFilter
-    )
-    executionData.from = file(coverageExecutionDataPath)
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
 }
 
-tasks.all { task ->
-    if (task.name.equals(dependsOnTask)) {
-        task.finalizedBy generateCodeCoverageReports
+project.afterEvaluate {
+
+    (android.hasProperty('applicationVariants') ? android.'applicationVariants' : android.'libraryVariants')
+            .all { variant ->
+                def variantName = variant.name
+                def capVariantName = variantName.capitalize()
+                def testTaskName = "test${capVariantName}UnitTest"
+                tasks.create(name: "${variantName}Coverage", type: JacocoReport, dependsOn: testTaskName) {
+
+                    group = "Reporting"
+                    description = "Generate Jacoco coverage reports for the ${variantName} build."
+
+                    reports {
+                        html.enabled(true)
+                        xml.enabled(true)
+                    }
+
+                    def excludes = [
+                            '**/R.class',
+                            '**/R$*.class',
+                            '**/BuildConfig.*',
+                            '**/Manifest*.*',
+                            '**/*Test*.*',
+                            'android/**/*.*',
+                            'androidx/**/*.*',
+                            '**/*$ViewInjector*.*',
+                            '**/*Dagger*.*',
+                            '**/*MembersInjector*.*',
+                            '**/*_Factory.*',
+                            '**/*_Provide*Factory*.*',
+                            '**/*_ViewBinding*.*',
+                            '**/AutoValue_*.*',
+                            '**/R2.class',
+                            '**/R2$*.class',
+                            '**/*Directions$*',
+                            '**/*Directions.*',
+                            '**/*Binding.*'
+                    ]
+
+                    def jClasses = "${project.buildDir}/intermediates/javac/${variantName}/classes"
+                    def kClasses = "${project.buildDir}/tmp/kotlin-classes/${variantName}"
+                    def javaClasses = fileTree(dir: jClasses, excludes: excludes)
+
+                    def kotlinClasses = fileTree(dir: kClasses, excludes: excludes)
+
+                    classDirectories.from = files([javaClasses, kotlinClasses])
+                    def sourceDirs = ["${project.projectDir}/src/main/java", "${project.projectDir}/src/main/kotlin",
+                                      "${project.projectDir}/src/${variantName}/java", "${project.projectDir}/src/${variantName}/kotlin"]
+
+                    sourceDirectories.from = files(sourceDirs)
+
+                    executionData.from = files(["${project.buildDir}/jacoco/${testTaskName}.exec"])
+                }
+            }
+
+    tasks.register('coverAllVariants') {
+        dependsOn(provider {
+            tasks.findAll { task -> task.name.endsWith('Coverage') }
+        })
     }
 }
