@@ -15,6 +15,7 @@ android {
 }
 
 dependencies {
+
     /** logger **/
     implementation "com.orhanobut:logger:$version_logger"
 
