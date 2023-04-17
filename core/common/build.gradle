@@ -2,6 +2,7 @@ apply from: "$rootDir/gradle/_library.gradle"
 apply from: "$rootDir/gradle/_sdk.gradle"
 apply from: "$rootDir/gradle/jacoco.gradle"
 apply from: "$rootDir/gradle/hilt.gradle"
+apply from: "$rootDir/gradle/logger.gradle"
 apply from: "$rootDir/gradle/windowSize.gradle"
 
 android {
@@ -15,9 +16,6 @@ android {
 }
 
 dependencies {
-
-    /** logger **/
-    implementation "com.orhanobut:logger:$version_logger"
 
     testImplementation "androidx.test:core-ktx:$version_test_core_ktx"
 //    testImplementation "androidx.test.ext:junit:$version_junit_ext"
