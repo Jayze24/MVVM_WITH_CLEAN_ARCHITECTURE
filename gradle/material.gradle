@@ -1,0 +1,4 @@
+dependencies {
+    /** material **/
+    implementation "androidx.compose.material3:material3:$version_material3"
+}

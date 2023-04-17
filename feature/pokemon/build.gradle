@@ -1,4 +1,7 @@
 apply from: "$rootDir/gradle/_library.gradle"
+//apply from: "$rootDir/gradle/lifecycle.gradle"
+apply from: "$rootDir/gradle/coroutines.gradle"
+apply from: "$rootDir/gradle/material.gradle"
 apply from: "$rootDir/gradle/hilt.gradle"
 apply from: "$rootDir/gradle/composeOption.gradle"
 apply from: "$rootDir/gradle/compose.gradle"
@@ -12,17 +15,6 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:model"))
     implementation(project(":core:ui"))
-
-    /** Coroutines **/
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutines"
-
-    /** lifecycle **/
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_lifecycle"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$version_lifecycle"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$version_lifecycle"
-
-    /** material **/
-    implementation "androidx.compose.material3:material3:$version_material3"
 
     /** coil **/
     implementation "io.coil-kt:coil-compose:$version_coil"
