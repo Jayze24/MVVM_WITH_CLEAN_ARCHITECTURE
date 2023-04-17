@@ -1,0 +1,8 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion "$version_compose_compiler"
+    }
+}

@@ -2,6 +2,8 @@ apply from: "$rootDir/gradle/_application.gradle"
 apply from: "$rootDir/gradle/_sdk.gradle"
 apply from: "$rootDir/gradle/hilt.gradle"
 apply from: "$rootDir/gradle/testLocal.gradle"
+apply from: "$rootDir/gradle/composeOption.gradle"
+apply from: "$rootDir/gradle/compose.gradle"
 
 android {
     namespace 'space.jay.mvvm_with_clean_architecture'
@@ -36,11 +38,7 @@ android {
         jvmTarget = '11'
     }
     buildFeatures {
-        compose true
         buildConfig true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion "$version_compose_compiler"
     }
     packagingOptions {
         resources {
@@ -68,13 +66,6 @@ dependencies {
 
     /** material **/
     implementation "androidx.compose.material3:material3:$version_material3"
-
-    /** compose **/
-    implementation "androidx.activity:activity-compose:$version_activity_compose"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$version_lifecycle_compose"
-    implementation "androidx.compose.ui:ui:$version_compose_ui"
-    implementation "androidx.compose.ui:ui-tooling-preview:$version_compose_ui"
-    implementation "androidx.navigation:navigation-compose:$version_navigation_compose"
 
     androidTestImplementation "androidx.test.ext:junit:$version_junit_ext"
     androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso_core"
