@@ -1,0 +1,4 @@
+dependencies {
+    /** coil **/
+    implementation "io.coil-kt:coil-compose:$version_coil"
+}
