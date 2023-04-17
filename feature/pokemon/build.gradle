@@ -1,5 +1,4 @@
 apply from: "$rootDir/gradle/_library.gradle"
-apply from: "$rootDir/gradle/_sdk.gradle"
 apply from: "$rootDir/gradle/hilt.gradle"
 apply from: "$rootDir/gradle/composeOption.gradle"
 apply from: "$rootDir/gradle/compose.gradle"
