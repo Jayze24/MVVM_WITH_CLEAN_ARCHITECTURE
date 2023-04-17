@@ -1,8 +1,6 @@
-apply from: "$rootDir/gradle/application.gradle"
-apply from: "$rootDir/gradle/sdk.gradle"
+apply from: "$rootDir/gradle/_application.gradle"
+apply from: "$rootDir/gradle/_sdk.gradle"
 apply from: "$rootDir/gradle/hilt.gradle"
-
-apply from: "$rootDir/gradle/sdk.gradle"
 
 android {
     namespace 'space.jay.mvvm_with_clean_architecture'

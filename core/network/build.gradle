@@ -1,5 +1,5 @@
-apply from: "$rootDir/gradle/library.gradle"
-apply from: "$rootDir/gradle/sdk.gradle"
+apply from: "$rootDir/gradle/_library.gradle"
+apply from: "$rootDir/gradle/_sdk.gradle"
 apply from: "$rootDir/gradle/jacoco.gradle"
 apply from: "$rootDir/gradle/hilt.gradle"
 
