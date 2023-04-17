@@ -2,6 +2,7 @@ apply from: "$rootDir/gradle/_library.gradle"
 apply from: "$rootDir/gradle/_sdk.gradle"
 apply from: "$rootDir/gradle/jacoco.gradle"
 apply from: "$rootDir/gradle/hilt.gradle"
+apply from: "$rootDir/gradle/retrofit.gradle"
 apply from: "$rootDir/gradle/testLocal.gradle"
 apply from: "$rootDir/gradle/testLocalServer.gradle"
 
@@ -13,11 +14,6 @@ dependencies {
 
     implementation(project(":core:common"))
     implementation(project(":core:model"))
-
-    /** retrofit2 **/
-    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
-    implementation "com.squareup.retrofit2:converter-gson:$version_retrofit"
-    implementation "com.squareup.okhttp3:logging-interceptor:$version_logging_interceptor"
 
 //    testImplementation 'androidx.arch.core:core-testing:2.2.0'
 //    testImplementation 'org.mockito:mockito-core:2.25.0'

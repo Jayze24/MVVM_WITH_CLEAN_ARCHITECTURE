@@ -1,0 +1,6 @@
+dependencies {
+    /** retrofit2 **/
+    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$version_retrofit"
+    implementation "com.squareup.okhttp3:logging-interceptor:$version_logging_interceptor"
+}
