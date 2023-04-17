@@ -56,9 +56,9 @@ dependencies {
     implementation(project(":feature:searchWiki"))
     implementation(project(":feature:pokemon"))
 
-    androidTestImplementation "androidx.test.ext:junit:$version_junit_ext"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso_core"
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$version_compose_ui"
-    debugImplementation "androidx.compose.ui:ui-tooling:$version_compose_ui"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:$version_compose_ui"
+//    androidTestImplementation "androidx.test.ext:junit:$version_junit_ext"
+//    androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso_core"
+//    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$version_compose_ui"
+//    debugImplementation "androidx.compose.ui:ui-tooling:$version_compose_ui"
+//    debugImplementation "androidx.compose.ui:ui-test-manifest:$version_compose_ui"
 }

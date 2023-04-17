@@ -10,7 +10,4 @@ android {
 dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:model"))
-
-    /** coil **/
-    implementation "io.coil-kt:coil-compose:$version_coil"
 }
