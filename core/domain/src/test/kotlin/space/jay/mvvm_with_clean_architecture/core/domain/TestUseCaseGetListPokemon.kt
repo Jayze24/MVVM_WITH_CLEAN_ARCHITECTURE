@@ -35,7 +35,7 @@ class TestUseCaseGetListPokemon {
     lateinit var repository : RepositoryPokemonGo
 
     @Before
-    fun setUP() = runTest {
+    fun setUp() = runTest {
         hiltRule.inject()
         repository = FakeRepositoryPokemonGo(context)
     }
