@@ -1,16 +1,18 @@
 # MVVM_WITH_CLEAN_ARCHITECTURE
 
-이것은 MVVM + Clean Architecture의 샘플 앱입니다.      
-Wiki api를 사용하여 검색 앱을 구현하였습니다.
+MVVM + Clean Architecture + Unit test(with coverage check)의 샘플 App 입니다.
 
+### Acrchitecture
+- core
+  - domain : UseCase (주로 ViewModel에서 사용됩니다. DATA 레이어에서 받은 데이터를 가공하는 등의 로직이 들어갈 수 있습니다. UseCaseA를 ViewModelA, ViewModelB, ViewModelC... 등 여러 곳에 재사용 하면서 코드 중복을 방지 할 수 있고, ViewModel의 가독성을 개선할 수 있으며, 책임을 분할 할 수 있습니다.)
+  - data : Repository (다른 레이어는 데이터 소스에 직접 액세스해서는 안 됩니다. 데이터 레이어의 진입점은 항상 저장소 클래스여야 합니다. 저장소 클래스를 진입점으로 사용하면 아키텍처의 다양한 레이어(네트워크, 로컬데이터)를 독립적으로 확장할 수 있습니다. 데이터 변경 사항을 한 곳에 집중하고, 여러 데이터 소스 간의 충돌을 해결할 수 있습니다.)
+    - network, database(미구현) : DataSource (각 데이터 소스 클래스는 파일, 네트워크 소스, 로컬 데이터베이스와 같은 하나의 데이터 소스만 사용해야 합니다. 데이터 소스 클래스는 데이터 작업을 위한 애플리케이션과 시스템 간의 가교 역할을 합니다.)
+  - model : Entity (App에서 사용되는 데이터 클래스 정의 및 Entitiy 관련 로직이 들어갈 수 있습니다.)
+- feature : UI, ViewModel
 
-크게 Data, Domain, UI, ViewModel 영역으로 나눠져 있습니다.
-
-
-Data는 Repository를 통해 데이터를 가져오거나, 추가, 수정, 삭제를 할 수 있습니다. Source(interface)를 사용하여 Repository와 retrofit 간의 의존성을 제거하였습니다. 이렇게 만들면 추후 retrofit을 제거하고 다른 저장소나 통신 라이브러리로 변경하는 것이 쉽습니다. 또한, 가져온 데이터를 Domain에 있는 Entity 형식에 맞게 맵핑 해줍니다. 이유는 서버에서 전달하는 데이터 구조는 쉽게 변경 될 수 있으며, 앱에서 사용하는 데이터 구조와도 다를 수 있기 때문입니다.
-
-Domain에는 Entity와 UseCase, Boundary(interface)가 있는데 Boundary는 UseCase와 Data에 있는 Repository 간의 의존성을 제거하기 위해 존재합니다.
-
-UI에서는 View를 그려주며, 유저의 이벤트를 전달 받아 ViewModel을 호출 합니다. 또한 화면 구성에 필요한 데이터를 ViewModel에서 관찰합니다.
-
-ViewModel에서는 Domain에 있는 UseCase를 사용하여 데이터를 요청하고 받은 데이터를 가공하여 관찰하고 있는 UI에 알려(Notification)줍니다.
+### Unit Test
+#### 커버리지 확인(둘중에 하나 선택)
+`./gradlew debugCoverage` (모듈 별 유닛 테스트 시작 및 커버리지 체크)   
+`./gradlew coverAllVariants` (variant 별 유닛 테스트 시작 및 커버리지 체크)
+#### 각 모듈 별 커버리지 통합 (${rootDir}/build/reports/jacoco/) 
+`./gradlew allDebugCoverage`
