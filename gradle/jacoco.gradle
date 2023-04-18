@@ -47,6 +47,7 @@ project.afterEvaluate {
                             '**/*Directions.*',
                             '**/*Binding.*',
                             '**/*Hilt*.*',
+                            '**/*Injector*.*',
                     ]
 
                     def jClasses = "${project.buildDir}/intermediates/javac/${variantName}/classes"
