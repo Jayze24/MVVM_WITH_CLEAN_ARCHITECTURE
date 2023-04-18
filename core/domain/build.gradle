@@ -1,5 +1,6 @@
 apply from: "$rootDir/gradle/_library.gradle"
 apply from: "$rootDir/gradle/hilt.gradle"
+apply from: "$rootDir/gradle/testLocal.gradle"
 
 android {
     namespace 'space.jay.mvvm_with_clean_architecture.core.domain'
@@ -9,4 +10,6 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:data"))
     implementation(project(":core:model"))
+
+    testImplementation(project(":core:network"))
 }

@@ -1,14 +1,32 @@
+apply from: "$rootDir/gradle/jacoco.gradle"
+
 android {
     testOptions.unitTests.includeAndroidResources = true
 }
 
 dependencies {
+    testImplementation(project(":core:test"))
+
+    /** android test **/
     testImplementation "androidx.test:core-ktx:$version_test_core_ktx"
     testImplementation "androidx.test.ext:junit:$version_junit_ext"
 
+    /** coroutines **/
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_coroutines"
+
+    /** junit **/
     testImplementation "junit:junit:$version_junit"
 
+    /** robolectric **/
     testImplementation "org.robolectric:robolectric:$version_robolectric"
 
+    /** hilt **/
+    testImplementation "com.google.dagger:hilt-android-testing:$version_hilt"
+    kaptTest "com.google.dagger:hilt-android-compiler:$version_hilt"
+
+    /** truth **/
     testImplementation "com.google.truth:truth:$version_truth"
+
+    /** gson **/
+    testImplementation "com.google.code.gson:gson:2.10.1"
 }

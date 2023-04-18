@@ -21,7 +21,7 @@ import space.jay.mvvm_with_clean_architecture.core.network.model.DataPokemon
 import space.jay.mvvm_with_clean_architecture.core.network.model.asEntity
 import space.jay.mvvm_with_clean_architecture.core.network.retrofit.RetrofitNetworkPokemonGo
 import space.jay.mvvm_with_clean_architecture.core.network.retrofit.dao.DaoPokemonGo
-import java.io.File
+import space.jay.mvvm_with_clean_architecture.core.test.common.FileReader
 import java.net.HttpURLConnection
 
 @RunWith(RobolectricTestRunner::class)
@@ -30,6 +30,7 @@ class TestRetrofitNetworkPokemonGo {
     private val context : Context = ApplicationProvider.getApplicationContext<Context>()
     private lateinit var server : MockWebServer
     private lateinit var retrofitNetworkPokemonGo : RetrofitNetworkPokemonGo
+    private lateinit var fileReader : FileReader
 
     @Before
     fun setUp() {
@@ -41,6 +42,7 @@ class TestRetrofitNetworkPokemonGo {
             .build()
             .create(DaoPokemonGo::class.java)
         retrofitNetworkPokemonGo = RetrofitNetworkPokemonGo(context, daoPokemonGo)
+        fileReader = FileReader()
     }
 
     @After
@@ -54,7 +56,7 @@ class TestRetrofitNetworkPokemonGo {
             MockResponse().apply {
                 setResponseCode(HttpURLConnection.HTTP_OK)
                 addHeader("Content-Type", "application/json")
-                setBody(fileReader(context, "pokedex.json"))
+                setBody(fileReader.readJson(context, "pokedex"))
             }
         )
 
@@ -62,7 +64,7 @@ class TestRetrofitNetworkPokemonGo {
         // 성공 wrapper 왔는지 확인
         assertThat(result).isInstanceOf(Success::class.java)
         if (result is Success) {
-            val pokedexId1 = fileReader(context, "pokedex_id_1.json")
+            val pokedexId1 = fileReader.readJson(context, "pokedex_id_1")
             val pokemon = Gson().fromJson(pokedexId1, DataPokemon::class.java).asEntity(context.getString(R.string.language_pokemon_go))
             // 데이터가 entity로 변경되었는지 확인
             assertThat(result.data[0]).isEqualTo(pokemon)
@@ -111,7 +113,7 @@ class TestRetrofitNetworkPokemonGo {
             MockResponse().apply {
                 setResponseCode(HttpURLConnection.HTTP_OK)
                 addHeader("Content-Type", "application/json")
-                setBody(fileReader(context, "pokedex_mega.json"))
+                setBody(fileReader.readJson(context, "pokedex_mega"))
             }
         )
 
@@ -119,7 +121,7 @@ class TestRetrofitNetworkPokemonGo {
         // 성공 wrapper 왔는지 확인
         assertThat(result).isInstanceOf(Success::class.java)
         if (result is Success) {
-            val pokedexId1 = fileReader(context, "pokedex_id_3.json")
+            val pokedexId1 = fileReader.readJson(context, "pokedex_id_3")
             val pokemon = Gson().fromJson(pokedexId1, DataPokemon::class.java).asEntity(context.getString(R.string.language_pokemon_go))
             // 데이터가 entity로 변경되었는지 확인
             assertThat(result.data[0]).isEqualTo(pokemon)
@@ -132,7 +134,7 @@ class TestRetrofitNetworkPokemonGo {
             MockResponse().apply {
                 setResponseCode(HttpURLConnection.HTTP_OK)
                 addHeader("Content-Type", "application/json")
-                setBody(fileReader(context, "pokedex_generation_9.json"))
+                setBody(fileReader.readJson(context, "pokedex_generation_9"))
             }
         )
 
@@ -140,7 +142,7 @@ class TestRetrofitNetworkPokemonGo {
         // 성공 wrapper 왔는지 확인
         assertThat(result).isInstanceOf(Success::class.java)
         if (result is Success) {
-            val pokedexId1 = fileReader(context, "pokedex_id_901.json")
+            val pokedexId1 = fileReader.readJson(context, "pokedex_id_901")
             val pokemon = Gson().fromJson(pokedexId1, DataPokemon::class.java).asEntity(context.getString(R.string.language_pokemon_go))
             // 데이터가 entity로 변경되었는지 확인
             assertThat(result.data[0]).isEqualTo(pokemon)
@@ -153,7 +155,7 @@ class TestRetrofitNetworkPokemonGo {
             MockResponse().apply {
                 setResponseCode(HttpURLConnection.HTTP_OK)
                 addHeader("Content-Type", "application/json")
-                setBody(fileReader(context, "pokedex_id_1.json"))
+                setBody(fileReader.readJson(context, "pokedex_id_1"))
             }
         )
 
@@ -161,7 +163,7 @@ class TestRetrofitNetworkPokemonGo {
         // 성공 wrapper 왔는지 확인
         assertThat(result).isInstanceOf(Success::class.java)
         if (result is Success) {
-            val pokedexId1 = fileReader(context, "pokedex_id_1.json")
+            val pokedexId1 = fileReader.readJson(context, "pokedex_id_1")
             val pokemon = Gson().fromJson(pokedexId1, DataPokemon::class.java).asEntity(context.getString(R.string.language_pokemon_go))
             // 데이터가 entity로 변경되었는지 확인
             assertThat(result.data).isEqualTo(pokemon)
@@ -174,7 +176,7 @@ class TestRetrofitNetworkPokemonGo {
             MockResponse().apply {
                 setResponseCode(HttpURLConnection.HTTP_OK)
                 addHeader("Content-Type", "application/json")
-                setBody(fileReader(context, "pokedex_id_1.json"))
+                setBody(fileReader.readJson(context, "pokedex_id_1"))
             }
         )
 
@@ -182,15 +184,10 @@ class TestRetrofitNetworkPokemonGo {
         // 성공 wrapper 왔는지 확인
         assertThat(result).isInstanceOf(Success::class.java)
         if (result is Success) {
-            val pokedexId1 = fileReader(context, "pokedex_id_1.json")
+            val pokedexId1 = fileReader.readJson(context, "pokedex_id_1")
             val pokemon = Gson().fromJson(pokedexId1, DataPokemon::class.java).asEntity(context.getString(R.string.language_pokemon_go))
             // 데이터가 entity로 변경되었는지 확인
             assertThat(result.data).isEqualTo(pokemon)
         }
-    }
-
-    private fun fileReader(context : Context, fileName : String) : String {
-        val file = File(context.classLoader.getResource(fileName).file)
-        return file.bufferedReader().use { it.readText() }
     }
 }

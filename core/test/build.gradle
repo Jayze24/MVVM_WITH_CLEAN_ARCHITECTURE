@@ -1,0 +1,17 @@
+apply from: "$rootDir/gradle/_library.gradle"
+apply from: "$rootDir/gradle/hilt.gradle"
+
+android {
+    namespace 'space.jay.mvvm_with_clean_architecture.core.test'
+}
+
+dependencies {
+    implementation(project(":core:common"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:model"))
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_coroutines"
+
+    implementation "com.google.dagger:hilt-android-testing:$version_hilt"
+    kapt "com.google.dagger:hilt-android-compiler:$version_hilt"
+}
