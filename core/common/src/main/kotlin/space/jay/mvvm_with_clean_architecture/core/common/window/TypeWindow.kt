@@ -2,7 +2,7 @@ package space.jay.mvvm_with_clean_architecture.core.common.window
 
 data class TypeWindow(
     val pane : TypePane,
-    val Navigation : TypeNavigationPosition
+    val orientation : TypeOrientation
 )
 
 enum class TypePane {
@@ -10,8 +10,8 @@ enum class TypePane {
     DUAL
 }
 
-enum class TypeNavigationPosition {
-    BOTTOM,
-    START,
-    START_WIDE
+enum class TypeOrientation {
+    PORTRAIT,
+    LANDSCAPE,
+    LANDSCAPE_WIDE
 }
