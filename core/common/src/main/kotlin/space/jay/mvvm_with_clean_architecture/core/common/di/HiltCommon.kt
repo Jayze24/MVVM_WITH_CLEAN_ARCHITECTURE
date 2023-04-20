@@ -12,10 +12,18 @@ import javax.inject.Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class DispatcherIO
 
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class DispatcherDefault
+
 @Module
 @InstallIn(SingletonComponent::class)
 object HiltCommon {
     @Provides
     @DispatcherIO
     fun providesDispatcherIO(): CoroutineDispatcher = Dispatchers.IO
+
+    @Provides
+    @DispatcherDefault
+    fun providesDispatcherDefault(): CoroutineDispatcher = Dispatchers.Default
 }
