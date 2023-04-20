@@ -15,8 +15,8 @@ fun ShowErrorMessage(
     onClickRetry : () -> Unit,
     onDismissErrorMessage : (id : Long) -> Unit
 ) {
-    Log.send(listErrorMessage)
     if (listErrorMessage.isNotEmpty()) {
+        Log.send(listErrorMessage)
         val errorMessage = remember(listErrorMessage.first().id) { listErrorMessage.first() }
 
         LaunchedEffect(errorMessage.id, snackBar) {
