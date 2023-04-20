@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,28 +17,39 @@ import space.jay.mvvm_with_clean_architecture.core.model.pokemon.EntityPokemon
 import space.jay.mvvm_with_clean_architecture.core.ui.common.Loading
 import space.jay.mvvm_with_clean_architecture.core.ui.common.NoData
 import space.jay.mvvm_with_clean_architecture.core.ui.common.SearchBar
+import space.jay.mvvm_with_clean_architecture.core.ui.common.ShowErrorMessage
 
 @Composable
 fun ScreenListPokemon(
     modifier : Modifier = Modifier,
     lazyListState : LazyListState,
-    stateUIListPokemon : StateUIListPokemon,
+    stateUI : StateUIListPokemon,
+    snackBar: SnackbarHostState,
     onClickSearch: (name : String) -> Unit,
-    onClickPokemon : (number : Int) -> Unit
+    onClickPokemon : (number : Int) -> Unit,
+    onClickRetry : () -> Unit,
+    onDismissErrorMessage : (id : Long) -> Unit
 ) {
 
     Column(modifier = modifier) {
         SearchBar(
-            value = stateUIListPokemon.searchInput,
+            value = stateUI.searchInput,
             onValueChange = onClickSearch,
             hint = "search Pokemon",
         )
-        when (stateUIListPokemon) {
+        when (stateUI) {
             is StateUIListPokemon.Loading -> Loading()
-            is StateUIListPokemon.HasData -> HasData(listPokemon = stateUIListPokemon.listData, state = lazyListState, onClickPokemon)
+            is StateUIListPokemon.HasData -> HasData(listPokemon = stateUI.listData, state = lazyListState, onClickPokemon)
             is StateUIListPokemon.NoData -> NoData(message = "No Data")
         }
     }
+
+    ShowErrorMessage(
+        snackBar = snackBar,
+        listErrorMessage = stateUI.errorMessage,
+        onClickRetry = onClickRetry,
+        onDismissErrorMessage = onDismissErrorMessage
+    )
 }
 
 @Composable

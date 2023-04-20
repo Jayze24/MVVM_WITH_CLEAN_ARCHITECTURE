@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,11 +13,15 @@ import coil.compose.AsyncImage
 import space.jay.mvvm_with_clean_architecture.core.model.pokemon.EntityPokemon
 import space.jay.mvvm_with_clean_architecture.core.ui.common.Loading
 import space.jay.mvvm_with_clean_architecture.core.ui.common.NoData
+import space.jay.mvvm_with_clean_architecture.core.ui.common.ShowErrorMessage
 
 @Composable
 fun ScreenPokemonDetail(
     modifier : Modifier = Modifier,
-    stateUI : StateUIPokemonDetail
+    stateUI : StateUIPokemonDetail,
+    snackBar : SnackbarHostState,
+    onClickRetry : () -> Unit,
+    onDismissErrorMessage : (id : Long) -> Unit
 ) {
     Column(modifier = modifier) {
         when (stateUI) {
@@ -25,6 +30,13 @@ fun ScreenPokemonDetail(
             is StateUIPokemonDetail.NoData -> NoData(message = "포켓몬을 선택해 주세요.")
         }
     }
+
+    ShowErrorMessage(
+        snackBar = snackBar,
+        listErrorMessage = stateUI.errorMessage,
+        onClickRetry = onClickRetry,
+        onDismissErrorMessage = onDismissErrorMessage
+    )
 }
 
 @Composable

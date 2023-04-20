@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import space.jay.mvvm_with_clean_architecture.core.common.di.DispatcherDefault
 import space.jay.mvvm_with_clean_architecture.core.common.wrapper.ErrorMessage
 import space.jay.mvvm_with_clean_architecture.core.common.wrapper.Fail
 import space.jay.mvvm_with_clean_architecture.core.common.wrapper.NetworkError
@@ -25,6 +27,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelPokemon @Inject constructor(
+    @DispatcherDefault private val dispatcherDefault : CoroutineDispatcher,
     private val savedStateHandle : SavedStateHandle,
     private val useCaseGetListPokemon : UseCaseGetListPokemon,
     private val useCaseGetListMegaPokemon : UseCaseGetListMegaPokemon,
@@ -50,34 +53,39 @@ class ViewModelPokemon @Inject constructor(
         )
 
     init {
-        viewModelScope.launch {
-            getListPokemon()
-        }
+        getListPokemon()
     }
 
     fun search(name : String) {
         stateViewModelListPokemon.update { it.copy(searchInput = name) }
     }
 
-    suspend fun getListPokemon() {
+    fun getListPokemon() {
         stateViewModelListPokemon.update { it.copy(isLoading = true) }
-        stateViewModelListPokemon.update { state ->
-            when (val result = if (state.isMegaPokemon) useCaseGetListMegaPokemon() else useCaseGetListPokemon()) {
-                is Success -> state.copy(isLoading = false, listDataOriginal = result.data)
-                is NetworkError -> state.copy(
-                    isLoading = false,
-                    errorMessage = state.errorMessage + ErrorMessage(message = "${result.code} ${result.message}"),
-                    listDataOriginal = emptyList()
-                )
-                is Fail -> state.copy(
-                    isLoading = false,
-                    errorMessage = state.errorMessage + ErrorMessage(message = "${result.throwable}"),
-                    listDataOriginal = emptyList()
-                )
+        // Default dispatcher [https://developer.android.com/topic/architecture/ui-layer/state-production?hl=ko#mutating_the_ui_state_from_background_threads]
+        // 계산 집약적인 함수라고 가정 하고 예제로 넣어 봄.
+        viewModelScope.launch(dispatcherDefault) {
+            stateViewModelListPokemon.update { state ->
+                when (val result = if (state.isMegaPokemon) useCaseGetListMegaPokemon() else useCaseGetListPokemon()) {
+                    is Success -> state.copy(isLoading = false, listDataOriginal = result.data)
+                    is NetworkError -> state.copy(
+                        isLoading = false,
+                        errorMessage = state.errorMessage + ErrorMessage(message = "${result.code} ${result.message}"),
+                        listDataOriginal = emptyList()
+                    )
+                    is Fail -> state.copy(
+                        isLoading = false,
+                        errorMessage = state.errorMessage + ErrorMessage(message = "${result.throwable}"),
+                        listDataOriginal = emptyList()
+                    )
+                }
             }
         }
     }
 
+    fun getPokemonDetail() {
+        getPokemonDetail(stateViewModelPokemonDetail.value.number)
+    }
     fun getPokemonDetail(number : Int) {
         if (number == 0) {
             stateViewModelPokemonDetail.update { it.copy(isLoading = false, dataOriginal = null) }
@@ -100,6 +108,18 @@ class ViewModelPokemon @Inject constructor(
                     )
                 }
             }
+        }
+    }
+    fun dismissedErrorListPokemon(id : Long) {
+        stateViewModelListPokemon.update { state ->
+            val errorMessage = state.errorMessage.filterNot { it.id == id }
+            state.copy(errorMessage = errorMessage)
+        }
+    }
+    fun dismissedErrorPokemonDetail(id : Long) {
+        stateViewModelPokemonDetail.update { state ->
+            val errorMessage = state.errorMessage.filterNot { it.id == id }
+            state.copy(errorMessage = errorMessage)
         }
     }
 

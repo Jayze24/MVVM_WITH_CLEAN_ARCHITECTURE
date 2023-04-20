@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -27,7 +28,10 @@ fun NavController.navigateToPokemon(navOptions : NavOptions? = null, isMega : Bo
     this.navigate("$routePokemon/$isMega", navOptions)
 }
 
-fun NavGraphBuilder.toPokemon(window : TypeWindow) {
+fun NavGraphBuilder.toPokemon(
+    window : TypeWindow,
+    snackBar : SnackbarHostState
+) {
     composable(
         route = routeFinalPokemon,
         arguments = listOf(
@@ -43,13 +47,21 @@ fun NavGraphBuilder.toPokemon(window : TypeWindow) {
             TypePane.SINGLE -> {
                 if (stateUIPokemonDetail.isOpen) {
                     BackHandler(onBack = viewModel::closePokemonDetail)
-                    ScreenPokemonDetail(stateUI = stateUIPokemonDetail)    
+                    ScreenPokemonDetail(
+                        stateUI = stateUIPokemonDetail,
+                        snackBar = snackBar,
+                        onClickRetry = viewModel::getPokemonDetail,
+                        onDismissErrorMessage = viewModel::dismissedErrorPokemonDetail,
+                    )
                 } else {
                     ScreenListPokemon(
                         lazyListState = lazyListState,
-                        stateUIListPokemon = stateUIListPokemon,
+                        stateUI = stateUIListPokemon,
+                        snackBar = snackBar,
                         onClickSearch = viewModel::search,
-                        onClickPokemon = viewModel::getPokemonDetail
+                        onClickPokemon = viewModel::getPokemonDetail,
+                        onClickRetry = viewModel::getListPokemon,
+                        onDismissErrorMessage = viewModel::dismissedErrorListPokemon,
                     )
                 }
             }
@@ -57,11 +69,21 @@ fun NavGraphBuilder.toPokemon(window : TypeWindow) {
                 ScreenListPokemon(
                     modifier = Modifier.weight(1f),
                     lazyListState = lazyListState,
-                    stateUIListPokemon = stateUIListPokemon,
+                    stateUI = stateUIListPokemon,
+                    snackBar = snackBar,
                     onClickSearch = viewModel::search,
-                    onClickPokemon = viewModel::getPokemonDetail
+                    onClickPokemon = viewModel::getPokemonDetail,
+                    onClickRetry = viewModel::getListPokemon,
+                    onDismissErrorMessage = viewModel::dismissedErrorListPokemon,
                 )
-                ScreenPokemonDetail(modifier = Modifier.weight(1f), stateUI = stateUIPokemonDetail)
+
+                ScreenPokemonDetail(
+                    modifier = Modifier.weight(1f),
+                    stateUI = stateUIPokemonDetail,
+                    snackBar = snackBar,
+                    onClickRetry = viewModel::getPokemonDetail,
+                    onDismissErrorMessage = viewModel::dismissedErrorPokemonDetail,
+                )
             }
         }
     }
