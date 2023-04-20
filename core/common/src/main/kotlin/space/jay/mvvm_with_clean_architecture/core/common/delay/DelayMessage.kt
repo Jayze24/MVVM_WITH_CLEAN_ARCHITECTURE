@@ -1,15 +1,19 @@
 package space.jay.mvvm_with_clean_architecture.core.common.delay
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.update
 import java.util.UUID
 
-@ExperimentalCoroutinesApi
-@FlowPreview
 class DelayMessage<T : Any>(timeMillis : Long = 600) {
 
     private val state = MutableStateFlow(StateDelayMessage<T>())
+    @OptIn(FlowPreview::class)
     private val flowDelay : Flow<T> = state
         .debounce(timeMillis)
         .filter { !it.isDirect && it.message != null }
