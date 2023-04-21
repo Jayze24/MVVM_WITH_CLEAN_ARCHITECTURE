@@ -9,9 +9,11 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:domain"))
     implementation(project(":core:model"))
+    implementation(project(":core:network"))
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_coroutines"
 
     implementation "com.google.dagger:hilt-android-testing:$version_hilt"
-    kapt "com.google.dagger:hilt-android-compiler:$version_hilt"
+
+    implementation "com.google.code.gson:gson:2.10.1"
 }

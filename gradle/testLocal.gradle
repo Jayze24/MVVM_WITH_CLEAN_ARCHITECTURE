@@ -27,9 +27,6 @@ dependencies {
     /** truth **/
     testImplementation "com.google.truth:truth:$version_truth"
 
-    /** gson **/
-    testImplementation "com.google.code.gson:gson:2.10.1"
-
     /** turbine(test for flow) **/
     testImplementation 'app.cash.turbine:turbine:0.12.3'
 }
