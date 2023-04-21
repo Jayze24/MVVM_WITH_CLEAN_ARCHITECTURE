@@ -1,0 +1,14 @@
+apply from: "$rootDir/gradle/jacoco.gradle"
+
+android {
+    defaultConfig {
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+}
+
+dependencies {
+    androidTestImplementation(project(":core:test"))
+
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$version_compose_ui")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$version_compose_ui")
+}

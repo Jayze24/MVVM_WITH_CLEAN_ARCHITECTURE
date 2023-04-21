@@ -2,6 +2,7 @@ apply from: "$rootDir/gradle/_library.gradle"
 apply from: "$rootDir/gradle/material.gradle"
 apply from: "$rootDir/gradle/composeOption.gradle"
 apply from: "$rootDir/gradle/compose.gradle"
+apply from: "$rootDir/gradle/testInstrumentation.gradle"
 
 android {
     namespace 'space.jay.mvvm_with_clean_architecture.core.ui'
