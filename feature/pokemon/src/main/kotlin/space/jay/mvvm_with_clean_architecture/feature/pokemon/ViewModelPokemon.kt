@@ -92,7 +92,7 @@ class ViewModelPokemon @Inject constructor(
             return
         }
         viewModelScope.launch {
-            stateViewModelPokemonDetail.update { it.copy(isLoading = true, isOpen = true, number = number) }
+            stateViewModelPokemonDetail.update { it.copy(isLoading = true, isVisible = true, number = number) }
             stateViewModelPokemonDetail.update { state ->
                 when (val result = useCaseGetPokemon(number)) {
                     is Success -> state.copy(isLoading = false, dataOriginal = result.data)
@@ -124,6 +124,6 @@ class ViewModelPokemon @Inject constructor(
     }
 
     fun closePokemonDetail() {
-        stateViewModelPokemonDetail.update { it.copy(isOpen = false) }
+        stateViewModelPokemonDetail.update { it.copy(isVisible = false) }
     }
 }

@@ -45,7 +45,7 @@ fun NavGraphBuilder.toPokemon(
 
         when (window.pane) {
             TypePane.SINGLE -> {
-                if (stateUIPokemonDetail.isOpen) {
+                if (stateUIPokemonDetail.isVisible) {
                     BackHandler(onBack = viewModel::closePokemonDetail)
                     ScreenPokemonDetail(
                         stateUI = stateUIPokemonDetail,
