@@ -82,5 +82,9 @@ project.afterEvaluate {
         executions.removeAll([null])
 
         executionData.from = files(executions)
+
+        doLast {
+            println("See file:///${projectDir.absolutePath.replaceAll("\\\\","/")}/build/reports/jacoco/allDebugCoverage/html/index.html")
+        }
     }
 }
