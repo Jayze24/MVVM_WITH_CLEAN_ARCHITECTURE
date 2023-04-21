@@ -17,4 +17,5 @@ MVVM + Clean Architecture + Unit test(with coverage check)의 샘플 App 입니�
 #### 각 모듈 별 커버리지 통합 (${rootDir}/build/reports/jacoco/) 
 `./gradlew allDebugCoverage`
 
-![Unit Test coverage 확인](https://user-images.githubusercontent.com/32419237/232682301-d686fcbf-d492-4707-9cde-1297e62be70d.png "Unit Test coverage 확인")
+![Unit Test coverage 확인](https://user-images.githubusercontent.com/32419237/233575858-b7ad7261-8a5a-43cd-b62b-7845224b2197.png "Unit Test coverage 확인")
+
