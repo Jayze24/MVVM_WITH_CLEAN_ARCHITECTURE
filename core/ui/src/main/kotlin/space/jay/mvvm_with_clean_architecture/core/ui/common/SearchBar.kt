@@ -24,6 +24,7 @@ fun SearchBar(
     isFocus : Boolean = false,
     onSearch : (KeyboardActionScope.() -> Unit)? = null
 ) {
+    // todo jay 포커스 임시로 이렇게 만듬. 나중에 포커스 관련 리펙토링 할 것
     val focus = remember { FocusRequester() }
     TextField(
         modifier = Modifier
