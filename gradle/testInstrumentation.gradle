@@ -4,6 +4,7 @@ android {
     defaultConfig {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    testOptions.unitTests.includeAndroidResources = true
 }
 
 dependencies {
