@@ -2,22 +2,25 @@ package space.jay.mvvm_with_clean_architecture.core.ui.common
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onNodeWithContentDescription
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
-class TestNoData {
+@RunWith(RobolectricTestRunner::class)
+class TestLoading {
 
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Test
-    fun noData() {
-        val message = "no data"
+    fun loading() {
         composeTestRule.setContent {
-            NoData(message = message)
+            Loading()
         }
 
-        composeTestRule.onNodeWithText(message).assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("Loading").assertIsDisplayed()
     }
+
 }

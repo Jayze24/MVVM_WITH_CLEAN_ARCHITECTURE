@@ -1,12 +1,11 @@
 apply from: "$rootDir/gradle/_library.gradle"
-//apply from: "$rootDir/gradle/lifecycle.gradle"
 apply from: "$rootDir/gradle/coroutines.gradle"
 apply from: "$rootDir/gradle/material.gradle"
 apply from: "$rootDir/gradle/hilt.gradle"
 apply from: "$rootDir/gradle/composeOption.gradle"
 apply from: "$rootDir/gradle/compose.gradle"
 apply from: "$rootDir/gradle/coil.gradle"
-apply from: "$rootDir/gradle/testInstrumentation.gradle"
+apply from: "$rootDir/gradle/testLocal.gradle"
 
 android {
     namespace 'space.jay.mvvm_with_clean_architecture.feature.pokemon'

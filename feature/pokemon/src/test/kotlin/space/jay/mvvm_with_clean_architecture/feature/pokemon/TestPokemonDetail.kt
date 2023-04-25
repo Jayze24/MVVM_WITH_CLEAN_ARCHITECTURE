@@ -10,10 +10,13 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.test.core.app.ApplicationProvider
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import space.jay.mvvm_with_clean_architecture.core.test.fakeData.FakeDataPokemon
 import space.jay.mvvm_with_clean_architecture.feature.pokemon.pokemonDetail.ScreenPokemonDetail
 import space.jay.mvvm_with_clean_architecture.feature.pokemon.pokemonDetail.StateUIPokemonDetail
 
+@RunWith(RobolectricTestRunner::class)
 class TestPokemonDetail {
 
     @get:Rule

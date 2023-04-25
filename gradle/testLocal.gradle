@@ -29,4 +29,8 @@ dependencies {
 
     /** turbine(test for flow) **/
     testImplementation 'app.cash.turbine:turbine:0.12.3'
+
+    /** compose **/
+    testImplementation("androidx.compose.ui:ui-test-junit4:$version_compose_ui")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$version_compose_ui")
 }
