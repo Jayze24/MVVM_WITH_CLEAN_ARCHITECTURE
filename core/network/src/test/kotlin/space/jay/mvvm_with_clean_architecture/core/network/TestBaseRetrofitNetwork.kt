@@ -8,7 +8,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import retrofit2.Response
 import space.jay.mvvm_with_clean_architecture.core.common.wrapper.ClientError
-import space.jay.mvvm_with_clean_architecture.core.common.wrapper.Fail
+import space.jay.mvvm_with_clean_architecture.core.common.wrapper.Error
 import space.jay.mvvm_with_clean_architecture.core.common.wrapper.ServerError
 import space.jay.mvvm_with_clean_architecture.core.common.wrapper.Success
 import space.jay.mvvm_with_clean_architecture.core.network.retrofit.BaseRetrofitNetwork
@@ -69,26 +69,27 @@ class TestBaseRetrofitNetwork : BaseRetrofitNetwork()  {
 
     @Test
     fun callApi_error_else() = runBlocking {
+        val fakeErrorCode = 600
         val result = callApi(
-            api = { Response.error<String>(600, "".toResponseBody()) },
+            api = { Response.error<String>(fakeErrorCode, "".toResponseBody()) },
             mapping = { it.body() }
         )
-        assertThat(result).isInstanceOf(Fail::class.java)
-        if (result is Fail) {
-            assertThat(result.throwable).isInstanceOf(Throwable::class.java)
+        assertThat(result).isInstanceOf(Error::class.java)
+        if (result is Error) {
+            assertThat(result.code).isEqualTo(fakeErrorCode)
         }
     }
 
     @Test
     fun callApi_fail() = runBlocking {
-        val fakeException = Exception("")
+        val fakeException = Exception("error")
         val result = callApi<String, String>(
             api = { throw fakeException },
             mapping = { it.body() ?: "" }
         )
-        assertThat(result).isInstanceOf(Fail::class.java)
-        if (result is Fail) {
-            assertThat(result.throwable).isEqualTo(fakeException)
+        assertThat(result).isInstanceOf(Error::class.java)
+        if (result is Error) {
+            assertThat(result.message).isEqualTo(fakeException.message)
         }
     }
 }

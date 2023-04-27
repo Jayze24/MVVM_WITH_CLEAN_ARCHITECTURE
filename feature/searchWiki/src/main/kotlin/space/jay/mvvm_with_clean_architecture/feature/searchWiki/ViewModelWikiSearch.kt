@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import space.jay.mvvm_with_clean_architecture.core.common.delay.DelayMessage
-import space.jay.mvvm_with_clean_architecture.core.common.wrapper.Fail
+import space.jay.mvvm_with_clean_architecture.core.common.wrapper.Error
 import space.jay.mvvm_with_clean_architecture.core.common.wrapper.NetworkError
 import space.jay.mvvm_with_clean_architecture.core.common.wrapper.Success
 import space.jay.mvvm_with_clean_architecture.core.domain.UseCaseGetWikiData
@@ -54,9 +54,9 @@ class ViewModelWikiSearch @Inject constructor(
                     errorMessage = state.errorMessage + ErrorMessage(message = "${result.code} ${result.message}"),
                     data = null
                 )
-                is Fail -> state.copy(
+                is Error -> state.copy(
                     isLoading = false,
-                    errorMessage = state.errorMessage + ErrorMessage(message = "${result.throwable}"),
+                    errorMessage = state.errorMessage + ErrorMessage(message = "${result.message}"),
                     data = null
                 )
             }

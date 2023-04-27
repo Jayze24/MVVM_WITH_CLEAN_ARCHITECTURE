@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import space.jay.mvvm_with_clean_architecture.core.common.di.DispatcherDefault
 import space.jay.mvvm_with_clean_architecture.core.common.wrapper.ErrorMessage
-import space.jay.mvvm_with_clean_architecture.core.common.wrapper.Fail
+import space.jay.mvvm_with_clean_architecture.core.common.wrapper.Error
 import space.jay.mvvm_with_clean_architecture.core.common.wrapper.NetworkError
 import space.jay.mvvm_with_clean_architecture.core.common.wrapper.Success
 import space.jay.mvvm_with_clean_architecture.core.domain.UseCaseGetListMegaPokemon
@@ -73,9 +73,9 @@ class ViewModelPokemon @Inject constructor(
                         errorMessage = state.errorMessage + ErrorMessage(message = "${result.code} ${result.message}"),
                         listDataOriginal = emptyList()
                     )
-                    is Fail -> state.copy(
+                    is Error -> state.copy(
                         isLoading = false,
-                        errorMessage = state.errorMessage + ErrorMessage(message = "${result.throwable}"),
+                        errorMessage = state.errorMessage + ErrorMessage(message = "${result.message}"),
                         listDataOriginal = emptyList()
                     )
                 }
@@ -101,9 +101,9 @@ class ViewModelPokemon @Inject constructor(
                         errorMessage = state.errorMessage + ErrorMessage(message = "${result.code} ${result.message}"),
                         dataOriginal = null
                     )
-                    is Fail -> state.copy(
+                    is Error -> state.copy(
                         isLoading = false,
-                        errorMessage = state.errorMessage + ErrorMessage(message = "${result.throwable}"),
+                        errorMessage = state.errorMessage + ErrorMessage(message = "${result.message}"),
                         dataOriginal = null
                     )
                 }
